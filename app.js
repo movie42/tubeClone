@@ -7,6 +7,7 @@ import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import routes from "./routes";
+import { middleware } from "./middleware";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(morgan("dev"));
 
+app.use(middleware);
 app.use(routes.home, globalRouter);
 app.use(routes.user, userRouter);
 app.use(routes.video, videoRouter);
