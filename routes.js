@@ -6,13 +6,14 @@ const JOIN = "/join";
 
 const USER = "/user";
 const USER_DETAIL = "/:id";
-const EDIT_DETAIL = "/:id/edit";
+const EDIT_PROFILE = "/:id/edit-profile";
 const CHANGE_PASSWORD = "/:id/change-password";
 
 const VIDEO = "/video";
 const UPLOAD_VIDEO = "/upload-video";
-const DELETE_VIDEO = "/:id/delete-video";
+const VIDEO_DETAIL = "/:id";
 const EDIT_VIDEO = "/:id/edit-video";
+const DELETE_VIDEO = "/:id/delete-video";
 
 const routes = {
   home: HOME,
@@ -21,12 +22,13 @@ const routes = {
   join: JOIN,
   user: USER,
   userDetail: USER_DETAIL,
-  editDetail: EDIT_DETAIL,
+  editProfile: EDIT_PROFILE,
+  changePassword: CHANGE_PASSWORD,
   video: VIDEO,
+  videoDetail: VIDEO_DETAIL,
   uploadVideo: UPLOAD_VIDEO,
   deleteVideo: DELETE_VIDEO,
   editVideo: EDIT_VIDEO,
-  changePassword: CHANGE_PASSWORD,
 };
 
 export default routes;
