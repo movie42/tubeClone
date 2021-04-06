@@ -1,5 +1,21 @@
 header
     nav
-        ul
-            li 
-                a(href="/") HOME 
+        if !userLogin
+            ul
+                li 
+                    a(href=routes.home) HOME 
+                li 
+                    a(href=routes.login) login
+                li 
+                    a(href=routes.join) join
+        else 
+            ul 
+                li 
+                    a(href=routes.home) HOME 
+                li 
+                    a(href=routes.userDetail) User Profile
+                li 
+                    a(href=routes.uploadVideo) Upload
+                li 
+                    a(href=routes.logout) Logout             
+            

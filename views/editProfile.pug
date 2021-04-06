@@ -1,0 +1,8 @@
+extends layouts/layout
+
+block include 
+    form(action=routes.join, method="post")
+        input(type="email", name="id", required=true, placeholder="아이디를 입력해주세요")
+        input(type="text", name="name", required=true, placeholder="이름을 입력해주세요")
+        input(type="submit", value="로그인")
+    a(href=`/user/${routes.changePassword}`) 비밀번호 변경하기
