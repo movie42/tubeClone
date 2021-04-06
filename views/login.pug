@@ -1,7 +1,7 @@
 extends layouts/layout
 
-block include 
+block content 
     form(action=routes.login, method="post")
         input(type="email", name="id", required=true, placeholder="아이디를 입력해주세요")
         input(type="password", name="password", required=true, placeholder="비밀번호를 입력해주세요")
-        input(type="submit", name="password", required=true, placeholder="비밀번호를 입력해주세요")
+        input(type="submit", value="로그인")

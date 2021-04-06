@@ -8,6 +8,7 @@ import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import routes from "./routes";
 import { middleware } from "./middleware";
+import db from "./db";
 
 const app = express();
 
