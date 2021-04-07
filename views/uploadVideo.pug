@@ -1,8 +1,8 @@
 extends layouts/layout
 
 block content 
-    form(action=`/video/${routes.uploadVideo}`, method="post")
-        input(type="text", name="title", required=true, placeholder="제목을 입력해주세요")
-        input(type="file", name="videoFile", required=true)
-        textarea(placeholder="비디오의 내용을 입력해주세요")
+    form(action=`/video/${routes.uploadVideo}`, method="post", enctype="multipart/form-data")
+        input(type="text", name="title", required=true, placeholder="제목을 입력해주세요" )
+        input(type="file", name="videoFile", required=true, accept="video/*")
+        textarea(name="description", placeholder="비디오의 내용을 입력해주세요")
         input(type="submit", value="업로드")

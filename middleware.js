@@ -1,4 +1,9 @@
 import routes from "./routes";
+import multer from "multer";
+
+const multerVideo = multer({ dest: "uploads/video/" });
+
+export const uploadVideo = multerVideo.single("videoFile");
 
 export const middleware = (req, res, next) => {
   res.locals.webTitle = "클론튜브";
