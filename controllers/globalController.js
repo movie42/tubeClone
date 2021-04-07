@@ -1,16 +1,25 @@
 import routes from "../routes";
 import UserModel from "../model/userModel";
+import VideoModel from "../model/videoModel";
 
-export const home = (req, res) => {
-  res.render("home", { pageTitle: "메인" });
+export const home = async (req, res) => {
+  const video = await VideoModel.find({});
+  try {
+    res.render("home", { pageTitle: "메인", video });
+  } catch (error) {
+    console.log(error);
+    res.render("home", { pageTItle: "메인", video: [] });
+  }
 };
 
 export const getLogin = (req, res) => {
+  console.log(req.get("Cookie"));
   res.render("login", { pageTitle: "로그인" });
 };
 
 export const postLogin = (req, res) => {
-  res.render("home");
+  res.setHeader("Set-Cookie", "loggedIn=true");
+  res.redirect(routes.home);
 };
 
 export const logout = (req, res) => {

@@ -1,4 +1,4 @@
-import videoModel from "../model/videoModel";
+import VideoModel from "../model/videoModel";
 import routes from "../routes";
 
 //video upload
@@ -11,7 +11,7 @@ export const videoUpload = async (req, res) => {
     file: { path },
   } = req;
   try {
-    const video = await videoModel.create({
+    const video = await VideoModel.create({
       title,
       fileUrl: path,
       description,
@@ -28,14 +28,58 @@ export const videoDetail = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const video = await videoModel.findById(id);
+    const video = await VideoModel.findById(id);
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     console.log(error);
     res.render("404", { pageTitle: "404 페이지를 찾을 수 가 없습니다." });
-    setInterval(res.redirect(routes.home), 5000);
   }
 };
 
-export const editVideo = (req, res) => res.render("edit video");
-export const deleteVideo = (req, res) => res.render("delete video");
+//Edit Video
+export const getEditVideo = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    const video = await VideoModel.findById(id);
+    res.render("editVideo", { pageTitle: video.title, video });
+  } catch (error) {
+    console.log(error);
+    res.redirect(routes.videoDetail(id));
+  }
+};
+export const postEditVideo = async (req, res) => {
+  const {
+    body: { title, description },
+    params: { id },
+  } = req;
+  try {
+    const video = await VideoModel.findByIdAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        title,
+        description,
+      }
+    );
+    res.redirect(`/video${routes.videoDetail(video.id)}`);
+  } catch (error) {
+    console.log(error);
+    res.render("404", { pageTitle: "페이지를 찾을 수 없습니다." });
+  }
+};
+
+export const deleteVideo = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    await VideoModel.findByIdAndRemove(id);
+    res.redirect(routes.home);
+  } catch (error) {
+    console.log(error);
+    res.redirect(`/video${routes.videoDetail(id)}`);
+  }
+};

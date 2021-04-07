@@ -1,10 +1,10 @@
 extends layouts/layout
 
 block content 
-    h1=video.Title
+    h1=video.title
     video(src=`/${video.fileUrl}`, controls, width="720")
     p=video.description
     div 
         span views 
         span=video.view
-    
+    a(href=`/video${routes.editVideo(video.id)}`) 비디오 수정
