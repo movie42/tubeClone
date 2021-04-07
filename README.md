@@ -78,3 +78,9 @@ Schema는 이름과 type, required, default를 작성해주어야하는데 type�
 required는 반드시 해당 데이터가 값이 있어야할 때, 작성하고 default는 기본값을 어떻게 할 것인지를 작성한다.
 
 마지막에 mongoose.model("modelName", schemaMongoose)로 model의 이름과 shcema의 이름을 넣어주어서 어떤 모델에 어떻게 저장할 것인지를 정리해주고 export해주면 사용할 수 있다.
+
+### 7.multer
+
+비디오 파일을(어떤 파일이든지) 업로드할때 DB에 업로드를 하는건 좋지 않은 방법이다.
+그래서 fileUrl을 storage에서 불러와서 띄어주는데 multer를 이용하면 file path를 추적해서 video를 불러올 수 있다.
+나중에 아마존 storage에 연결할 때, 아마 변경되는 것 같은데... 일단 지금은 이렇게...
