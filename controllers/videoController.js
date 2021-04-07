@@ -30,7 +30,6 @@ export const videoDetail = async (req, res) => {
   try {
     const video = await videoModel.findById(id);
     res.render("videoDetail", { pageTitle: video.title, video });
-    throw error;
   } catch (error) {
     console.log(error);
     res.render("404", { pageTitle: "404 페이지를 찾을 수 가 없습니다." });

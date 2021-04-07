@@ -1,4 +1,10 @@
 extends layouts/layout
 
 block content 
-    h1 Video Detail
+    h1=video.Title
+    video(src=`/${video.fileUrl}`, controls, width="720")
+    p=video.description
+    div 
+        span views 
+        span=video.view
+    
