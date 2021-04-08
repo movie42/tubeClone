@@ -79,8 +79,15 @@ required는 반드시 해당 데이터가 값이 있어야할 때, 작성하고 
 
 마지막에 mongoose.model("modelName", schemaMongoose)로 model의 이름과 shcema의 이름을 넣어주어서 어떤 모델에 어떻게 저장할 것인지를 정리해주고 export해주면 사용할 수 있다.
 
-### 7.multer
+### 7. multer
 
 비디오 파일을(어떤 파일이든지) 업로드할때 DB에 업로드를 하는건 좋지 않은 방법이다.
 그래서 fileUrl을 storage에서 불러와서 띄어주는데 multer를 이용하면 file path를 추적해서 video를 불러올 수 있다.
 나중에 아마존 storage에 연결할 때, 아마 변경되는 것 같은데... 일단 지금은 이렇게...
+
+### 8. cookie, session 그리고 Authentication
+
+- [cookie - HTTP cookie, mozilla](https://developer.mozilla.org/ko/docs/Web/HTTP/Cookies)
+  사용자는 Frontend(View)를 통해 Server(Node App)에 요청(request)을 보낸다. 로그인 페이지를 예로 들면 로그인 req를 보낸다. 그러면 브라우저는 그 데이터 조각을 저장해 놓았다가 동일한 서버에 재 요청 시 저장된 데이터를 함께 전송한다. 예를 들면 로그인 이후에 새로고침을 한다던가... 그 저장 공간이 쿠키다. (제대로 이해한거 맞나?)
+  서버에서 사용자 브라우저에 쿠키를 전송하기 위해서 response header를 설정하게 되고 유저가 프론트 앤드에서 요청값을 보낼때마다 쿠키를 참조하여 같은 브라우저에서 재 요청을 보내는지 확인한다.
+  쿠키는 Client-side에 저장되는 것이다.

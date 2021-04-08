@@ -13,12 +13,11 @@ export const home = async (req, res) => {
 };
 
 export const getLogin = (req, res) => {
-  console.log(req.get("Cookie"));
   res.render("login", { pageTitle: "로그인" });
 };
 
 export const postLogin = (req, res) => {
-  res.setHeader("Set-Cookie", "loggedIn=true");
+  res.setHeader("Set-Cookie", "User=true");
   res.redirect(routes.home);
 };
 
