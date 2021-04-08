@@ -17,7 +17,7 @@ export const getLogin = (req, res) => {
 };
 
 export const postLogin = (req, res) => {
-  res.setHeader("Set-Cookie", "User=true");
+  req.session.isLoggedIn = true;
   res.redirect(routes.home);
 };
 
