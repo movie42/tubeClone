@@ -32,10 +32,12 @@ export const getJoin = (req, res) => {
 export const postJoin = async (req, res) => {
   const {
     body: { id, password, password2, name },
+    file: { path },
   } = req;
-  if (password !== password2) {
+  if (password === password2) {
     const user = await UserModel.create({
       id,
+      avatarUrl: path,
       password,
       name,
     });

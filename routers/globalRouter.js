@@ -8,6 +8,7 @@ import {
   getJoin,
   postJoin,
 } from "../controllers/globalController";
+import { uploadAvatar } from "../middleware";
 const globalRouter = express.Router();
 
 globalRouter.get(routes.home, home);
@@ -20,6 +21,6 @@ globalRouter.get(routes.logout, logout);
 
 //join
 globalRouter.get(routes.join, getJoin);
-globalRouter.post(routes.join, postJoin);
+globalRouter.post(routes.join, uploadAvatar, postJoin);
 
 export default globalRouter;

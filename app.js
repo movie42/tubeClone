@@ -18,13 +18,6 @@ app.use("/uploads", express.static("uploads"));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(
-  expressSession({
-    secret: "my secret",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
 app.use(middleware);
 app.use(morgan("dev"));
 

@@ -90,4 +90,13 @@ required는 반드시 해당 데이터가 값이 있어야할 때, 작성하고 
 - [cookie - HTTP cookie, mozilla](https://developer.mozilla.org/ko/docs/Web/HTTP/Cookies)
   사용자는 Frontend(View)를 통해 Server(Node App)에 요청(request)을 보낸다. 로그인 페이지를 예로 들면 로그인 req를 보낸다. 그러면 브라우저는 그 데이터 조각을 저장해 놓았다가 동일한 서버에 재 요청 시 저장된 데이터를 함께 전송한다. 예를 들면 로그인 이후에 새로고침을 한다던가... 그 저장 공간이 쿠키다. (제대로 이해한거 맞나?)
   서버에서 사용자 브라우저에 쿠키를 전송하기 위해서 response header를 설정하게 되고 유저가 프론트 앤드에서 요청값을 보낼때마다 쿠키를 참조하여 같은 브라우저에서 재 요청을 보내는지 확인한다.
-  쿠키는 Client-side에 저장되는 것이다.
+  쿠키는 Client-side에 저장되는 것이다. 따라서 쿠키의 value는 브라우저에서 조작이 가능해진다.
+
+- session
+  세션은 server-side에 저장되고 세션의 키 값만 클라이언트 쪽에 저장한다. 브라우저는 필요할 때, 이 키값을 이용하여 서버에 저장된 데이터를 사용하게 된다.
+  세션의 수명은 브라우저를 통해 웹서버에 접속한 순간부터 웹 브라우져를 종료하여 연결을 끊는 시점까지다.
+  세션은 보안에 취약한 쿠키를 보완해주는 역할을 한다.
+
+[쿠키와 세션의 차이](https://hahahoho5915.tistory.com/32) 이걸 보니 더 모르겠다.
+
+Authentication은 passport를 설치하여 passport로 진행하려고 한다.(passport없이 authentication 코드를 작성하는건 일단 동작이 어떻게 되는지 전체적으로 이해를 한 상태에서 하나씩 뜯어봐야 조금 덜 지루하게 공부 할 수 있을 것 같다. )
