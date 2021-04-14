@@ -31,16 +31,14 @@ export const getJoin = (req, res) => {
 
 export const postJoin = async (req, res) => {
   const {
-    body: { id, password, password2, name },
-    file: { path },
+    body: { email, password, password2, name },
   } = req;
   if (password === password2) {
-    const user = await UserModel.create({
-      id,
-      avatarUrl: path,
-      password,
+    await UserModel.create({
+      email,
       name,
+      password,
     });
-    res.redirect(routes.home);
+    return res.redirect(routes.home);
   }
 };

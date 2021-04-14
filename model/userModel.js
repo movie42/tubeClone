@@ -3,16 +3,16 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: "email is required",
+    required: true,
   },
   password: {
     type: String,
-    required: "password is required",
+    required: true,
   },
   avatarUrl: String,
   name: {
     type: String,
-    required: "name is required",
+    required: true,
   },
   createAt: {
     type: Date,
