@@ -108,3 +108,31 @@ Authentication은 passport를 설치하여 passport로 진행하려고 한다.(p
 웹펙은 엔트리와 아웃풋을 가지고 있다.
 엔트리 : 변환할 파일이 어느 경로로부터 오는가.
 아웃풋 : 변환한 파일을 어디에 저장할 것인가.
+
+### 9. CSP에 대하여
+
+거의 이틀동안 뻘짓을 했다. webpack으로 클라이언트 코드를 변환한다음에 실행을 시키려고 하면 계속 에러가 떴다.
+
+```
+  main.js:19 Uncaught EvalError: Refused to evaluate a string as JavaScript because ‘unsafe-eval’ is not an allowed source of script in the following Content Security Policy directive: “script-src ‘self’“.
+```
+
+많은 방법을 시도해보았다.
+
+Header를 nodejs로 변경하기(실패)
+csp-html-webpack-plugin 설치하기(실패)
+webpack페이지 뒤져서 metadata바꿔보기(실패)
+구글 CSP정책에 대한 글 쭉 읽고 metadata바꿔보기(실패)
+stackoverflow뒤져서 하라는대로 해보기(실패 - 게다가 이건 위의 방법들과 동일)
+
+그러다가... helmet()을 우연치 않게 보게 되었고 helmet설정을 다음과 같이 해야한다는 것을 깨닫게 되었다.
+
+```javascript
+app.use(helmet({ contentSecurityPolicy: false }));
+```
+
+이거 한줄로 모든 게임은 끝났다. 왜 이걸 안넣었을까? 바보...
+
+참고로 바꿔도 안되는 이유를 찾아봤더니 크롬이 저장하고 있는 캐쉬때문이었다. 네트워크를 아무리 지워도 이전에 적용한 것을 계속 요청해서 전부 지웠더니 새로운 요청값이 담긴 것을 get하였다.
+
+어쨌든 드디어 해결했다. console.log("hi")가 동작하더라...
