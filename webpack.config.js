@@ -1,8 +1,8 @@
-const path = require("path");
-const autoprefixer = require("autoprefixer");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path");
 
 const MODE = process.env.WEBPACK_ENV;
+
 const ENTRY_FILE = path.resolve(__dirname, "assets", "js", "main.js");
 const OUTPUT_DIR = path.join(__dirname, "static");
 
@@ -24,15 +24,7 @@ const config = {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: [
-                  [
-                    "autoprefixer",
-                    {
-                      //options
-                      browsers: "cover 99.5%",
-                    },
-                  ],
-                ],
+                plugins: [["autoprefixer"]],
               },
             },
           },
@@ -49,6 +41,8 @@ const config = {
   },
   plugins: [
     new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
       filename: "styles.css",
     }),
   ],
