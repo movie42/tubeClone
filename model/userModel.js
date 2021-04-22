@@ -1,18 +1,17 @@
 import mongoose from "mongoose";
+import passportLocalMongoose from "passport-local-mongoose";
 
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  avatarUrl: String,
   name: {
     type: String,
     required: true,
+  },
+  password: {
+    type: String,
   },
   createAt: {
     type: Date,
@@ -24,6 +23,10 @@ const userSchema = new mongoose.Schema({
       ref: "Comment",
     },
   ],
+});
+
+userSchema.plugin(passportLocalMongoose, {
+  usernameField: "email",
 });
 
 const model = mongoose.model("User", userSchema);

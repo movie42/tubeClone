@@ -101,7 +101,15 @@ required는 반드시 해당 데이터가 값이 있어야할 때, 작성하고 
 
 Authentication은 passport를 설치하여 passport로 진행하려고 한다.(passport없이 authentication 코드를 작성하는건 일단 동작이 어떻게 되는지 전체적으로 이해를 한 상태에서 하나씩 뜯어봐야 조금 덜 지루하게 공부 할 수 있을 것 같다. )
 
-### 8. WEBPACK
+### 8-1. serialization & deserialization
+
+serialization : 쿠키가 어떤 정보를 가질 수 있는가.
+어떤 feild가 쿠키에 담길 것인지 알려준다.
+쿠키에는 너무 많은 정보를 담게 되면 안된다.(아마 보안문제때문에 그런것 같다.)
+
+deserialization : 어느 사용자인지 어떻게 찾는가? 즉 해당 쿠키의 정보를 어떻게 사용자로 전환할 수 있는지 알려준다.
+
+### 9. WEBPACK
 
 웹팩은 module bundler이다. sass나 es6같은 파일을 브라우저가 읽을 수 있도록 호환되는 파일로 변환해준다.
 
@@ -109,7 +117,7 @@ Authentication은 passport를 설치하여 passport로 진행하려고 한다.(p
 엔트리 : 변환할 파일이 어느 경로로부터 오는가.
 아웃풋 : 변환한 파일을 어디에 저장할 것인가.
 
-### 9. CSP에 대하여
+### 10. CSP에 대하여
 
 거의 이틀동안 뻘짓을 했다. webpack으로 클라이언트 코드를 변환한다음에 실행을 시키려고 하면 계속 에러가 떴다.
 

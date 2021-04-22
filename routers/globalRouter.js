@@ -21,6 +21,6 @@ globalRouter.get(routes.logout, logout);
 
 //join
 globalRouter.get(routes.join, getJoin);
-globalRouter.post(routes.join, uploadAvatar, postJoin);
+globalRouter.post(routes.join, postJoin, postLogin);
 
 export default globalRouter;
