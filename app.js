@@ -2,14 +2,16 @@ import express from "express";
 import helmet from "helmet";
 import bodyParser from "body-parser";
 import morgan from "morgan";
+import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-import passport from "passport";
+import passport, { session } from "passport";
 import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import routes from "./routes";
 import { localMiddleware } from "./middleware";
 import expressSession from "express-session";
+import MongoStore from "connect-mongo";
 import "./passport";
 
 const app = express();
@@ -27,8 +29,12 @@ app.use(
     secret: process.env.SESSION_KEY,
     resave: true,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URL,
+    }),
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
