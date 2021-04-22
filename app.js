@@ -2,7 +2,6 @@ import express from "express";
 import helmet from "helmet";
 import bodyParser from "body-parser";
 import morgan from "morgan";
-import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import passport, { session } from "passport";
 import globalRouter from "./routers/globalRouter";

@@ -109,6 +109,16 @@ serialization : 쿠키가 어떤 정보를 가질 수 있는가.
 
 deserialization : 어느 사용자인지 어떻게 찾는가? 즉 해당 쿠키의 정보를 어떻게 사용자로 전환할 수 있는지 알려준다.
 
+### 8-2. express-session && connect-mongo
+
+express session을 설치하여서 session key를 저장하였다. sotre 설정을 통해서 서버가 재시작되더라도 session키를 알수 있도록 하기 위해서 connect-mongo를 설치하여 session을 서버 사이드에 저장할 수 있도록 설정했다.
+
+### 8-3. 로컬 로그인을 passportJS를 통해 한번 다 만들어 보면서
+
+passport를 통해 serialization, deserialization을 설정하고 가입과 동시에 authenticatie을 passport가 하도록 controller를 작성했다. 아직 일련의 과정을 완전하게 이해한 것은 아니지만 passport가 serialize를 하는 과정에서 쿠키를 생성하고 express-session을 통해서 session을 생성하도록 한다. session은 서버 사이드에 저장되어 새로고침을 하거나 서버를 재시작하더라고 기억하고 있도록 한다.
+
+만약 이 모든 과정을 vanilla nodejs로 만든다면 어떻게 될까? 꽤나 복잡한 과정을 거치게 될 것이다. 하지만 저레벨 수준에서 어떤 일이 일어나고 있는지 아직 이해가 안된다. 이 부분은 공부한 다음에 보충해보고싶다.
+
 ### 9. WEBPACK
 
 웹팩은 module bundler이다. sass나 es6같은 파일을 브라우저가 읽을 수 있도록 호환되는 파일로 변환해준다.
