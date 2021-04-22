@@ -119,6 +119,14 @@ passport를 통해 serialization, deserialization을 설정하고 가입과 동�
 
 만약 이 모든 과정을 vanilla nodejs로 만든다면 어떻게 될까? 꽤나 복잡한 과정을 거치게 될 것이다. 하지만 저레벨 수준에서 어떤 일이 일어나고 있는지 아직 이해가 안된다. 이 부분은 공부한 다음에 보충해보고싶다.
 
+### 8-4. github login
+
+passport strategies를 사용하여 socail login을 만들어보았다. 나는 보니까 passport-github2가 있어서 그것을 사용하였다. 문서를 보고 차근 차근 따라하면 되고 github에서 내가 현재 사용하고 있는 url을 OAuth에 등록하면 된다.
+
+보고 있는 강의에서 뭔가 controller에 모든 것을 변수로 선언해서 예시에 있는 부분을 전부 다 바꿔서 좀 복잡해보이지만 유지보수를 생각하면 변수로 선언해서 집어 넣으면 어떤 부분이 오류가 생긴건지 조금 더 빠르게 찾을 수 있어서 편리하다.
+
+다음은 KAKAO LOGIN을 사용해봐야겠다. facebook login은 https가 아니면 너무 복잡해서 그냥 생략하고 kakao, naver를 사용해봐야겠다.
+
 ### 9. WEBPACK
 
 웹팩은 module bundler이다. sass나 es6같은 파일을 브라우저가 읽을 수 있도록 호환되는 파일로 변환해준다.

@@ -17,6 +17,8 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  avatarUrl: String,
+  githubId: Number,
   Comment: [
     {
       type: mongoose.Schema.Types.ObjectId,

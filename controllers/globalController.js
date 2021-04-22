@@ -22,10 +22,6 @@ export const postLogin = passport.authenticate("local", {
   successRedirect: routes.home,
 });
 
-export const logout = (req, res) => {
-  res.render("logout");
-};
-
 export const getJoin = (req, res) => {
   res.render("join", { pageTitle: "회원가입" });
 };
