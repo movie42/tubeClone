@@ -1,7 +1,86 @@
-body {
-  background-color: blanchedalmond;
+@import "./_reset.scss";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+@font-face {
+  font-family: "NOTO Sans KR";
+  src: url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
 }
 
-h1 {
-  color: red;
+body {
+  font-family: "NOTO Sans KR";
+  letter-spacing: -0.5px;
+}
+
+.header {
+  background-color: #ff00b3;
+  .nav {
+    display: flex;
+    height: 60px;
+    justify-content: space-between;
+    align-items: center;
+    a {
+      font-size: 1.2em;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+
+      &:hover {
+        color: #1100ff;
+      }
+      &:active {
+        color: blue;
+      }
+    }
+    .logo_container {
+      margin-left: 10px;
+    }
+    .login_container {
+      display: flex;
+      justify-content: space-around;
+      width: 200px;
+    }
+  }
+}
+
+.main {
+  height: 100vh;
+}
+
+.footer {
+  height: 20vh;
+}
+
+.form_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: inherit;
+  justify-content: center;
+  form {
+    display: flex;
+    width: 500px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: inherit;
+    input {
+      border: 0px;
+      width: 100%;
+      border-bottom: 2px solid rgba(255, 0, 179, 0.466);
+      background-color: unset;
+      margin-top: 10px;
+      font-size: 1.5em;
+      padding: 10px;
+    }
+    .submit_btn {
+      margin-top: 10px;
+      color: #ff00b3;
+      border: 2px solid #ff00b3;
+      padding: 5px 40px;
+      font-weight: bold;
+      &:hover {
+        background-color: #ff00b3;
+        color: #fff;
+      }
+    }
+  }
 }

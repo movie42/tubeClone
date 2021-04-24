@@ -1,10 +1,12 @@
 extends layouts/layout
 
 block content 
-    form(action=routes.join, method="post")
-        input(type="email", name="email", required=true, placeholder="아이디를 입력해주세요")
-        input(type="text", name="name", required=true, placeholder="이름을 입력해주세요")
-        input(type="password", name="password", required=true, placeholder="비밀번호를 입력해주세요")
-        input(type="password", name="password2", required=true, placeholder="비밀번호를 한번 더 입력해주세요")
-        input(type="submit", value="가입하기")
-    include partials/socialLogin
+    h1 회원가입하기
+    div.form_container 
+        form(action=routes.join, method="post")
+            input(type="email", name="email", required=true, placeholder="아이디를 입력해주세요")
+            input(type="text", name="name", required=true, placeholder="이름을 입력해주세요")
+            input(type="password", name="password", required=true, placeholder="비밀번호를 입력해주세요")
+            input(type="password", name="password2", required=true, placeholder="비밀번호를 한번 더 입력해주세요")
+            input(type="submit", value="가입하기", class="submit_btn")
+        include partials/socialLogin

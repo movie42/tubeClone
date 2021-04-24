@@ -166,3 +166,11 @@ app.use(helmet({ contentSecurityPolicy: false }));
 ### 11. apple 실리콘
 
 apple 실리콘이 탑제된 노트북을 샀다. 그리고 node js v16을 설치했다. 그리고 재앙이 시작되었다. 6시간 반동안 gyp error에 모든것을 다 쏟아 붓다가 rebuild를 하면서 error메시지를 읽는 도중 해결 방법이 잘못된것같다는 생각이 들었다. 에러 메시지를 추적하다 nvm까지 오게 되었고 nvm을 설치한 뒤에서야 나는 npm install 오류가 나는지 알게되었다. 지금까지 설치한 npm 패키지는 node v15.14.0에서 설치한 것들이었다. 그래서 v16에서 설치가 안된것이었다. 이걸 어떻게 감으로 알게 됐냐면 새로운 폴더를 만들어서 v16에서 npm install express를 실행했더니 너무 에러 없이 잘되길래 아... 이거 좀 뭔가 이상한데?라는 느낌이 스쳤다고 해야할까? 어쩄든... 설치 됐다. 그래서 npm start를 누르는 순간 에러가 한무더기... 또 왜그러나 했더니 .env파일은 github에 올리지 않기 때문에 보안코드를 불러오지 못하는데서부터 오류가 발생했다. 아직도 넘어야할 산이 너무 많다. mongodb community도 설치해야하고 .env설정도 해야하고.. 어휴... 오늘은 그만 자자...;
+
+### 11-1. node-sass 실행 에러문제
+
+webpack assets을 컴파일링 하는 과정에서 "Node Sass does not yet support your current environment: OS X Unsupported architecture (arm64) with Unsupported runtime (93)"라고 에러메시지가 떴다. 뭐지 전에는 잘 됐었는데 하다가... 에러메시지를 읽어보니까 아직 M1을 지원하지 않는 것같다. nvm으로 버전을 살펴보니까 v16.0.0에서 아직 실행이 안되는 것 같다. nvm에서 node 버전을 v14로 낮춰서 node-sass를 다시 설치한다음 webpack을 다시 빌드 시켰다. 그랬더니 에러가 사라졌다.
+
+"에플 실리콘을 지원하기 위해서 오늘도 수고하시는 개발자들께 감사드립니다."
+
+이제 view작업 해야겠다.

@@ -1,17 +1,19 @@
-header
-    nav
+header.header
+    nav.nav
         if !user
-            ul
+            ul.logo_container
                 li 
                     a(href=routes.home) HOME 
+            ul.login_container
                 li 
                     a(href=routes.login) login
                 li 
                     a(href=routes.join) join
         else 
-            ul 
+            ul.logo_container 
                 li 
                     a(href=routes.home) HOME 
+            ul.login_container
                 li 
                     a(href=routes.userDetail) User Profile
                 li 
