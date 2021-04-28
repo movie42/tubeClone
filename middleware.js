@@ -10,7 +10,7 @@ export const uploadAvatar = multerAvatar.single("avatarFile");
 export const localMiddleware = (req, res, next) => {
   res.locals.webTitle = "클론튜브";
   res.locals.routes = routes;
-  res.locals.user = req.user || null;
+  res.locals.loggedUser = req.user || null;
   next();
 };
 

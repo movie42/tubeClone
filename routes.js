@@ -8,6 +8,7 @@ const USER = "/user";
 const USER_DETAIL = "/:id";
 const EDIT_PROFILE = "/:id/edit-profile";
 const CHANGE_PASSWORD = "/:id/change-password";
+const ME = "/me";
 
 const VIDEO = "/video";
 const UPLOAD_VIDEO = "/upload-video";
@@ -25,7 +26,13 @@ const routes = {
   logout: LOGOUT,
   join: JOIN,
   user: USER,
-  userDetail: USER_DETAIL,
+  userDetail: (id) => {
+    if (id) {
+      return `/user/${id}`;
+    } else {
+      return USER_DETAIL;
+    }
+  },
   editProfile: EDIT_PROFILE,
   changePassword: CHANGE_PASSWORD,
   video: VIDEO,
@@ -53,6 +60,7 @@ const routes = {
   },
   github: GITHUB,
   githubCallback: GITHUB_CALLBACK,
+  me: ME,
 };
 
 export default routes;

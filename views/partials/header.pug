@@ -1,6 +1,6 @@
 header.header
     nav.nav
-        if !user
+        if !loggedUser
             ul.logo_container
                 li 
                     a(href=routes.home) HOME 
@@ -15,9 +15,9 @@ header.header
                     a(href=routes.home) HOME 
             ul.login_container
                 li 
-                    a(href=routes.userDetail) User Profile
+                    a(href=routes.me) User Profile
                 li 
-                    a(href=routes.uploadVideo) Upload
+                    a(href=`/video${routes.uploadVideo}`) Upload
                 li 
                     a(href=routes.logout) Logout             
             
