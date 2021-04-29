@@ -2,11 +2,12 @@ extends layouts/layout
 include mixins/videoBlock
 
 block content
-    h1 Get Your Video 
-    each item in video
-        +videoBlock({
-            id:item.id,
-            title:item.title,
-            fileUrl:item.fileUrl
-        })
+    h1.head_title 나의 비디오들
+    .content_container 
+        each item in video
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                fileUrl:item.fileUrl
+            })
 

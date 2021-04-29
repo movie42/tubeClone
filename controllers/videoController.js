@@ -80,19 +80,20 @@ export const postEditVideo = async (req, res) => {
 };
 
 export const deleteVideo = async (req, res) => {
+  console.log("hi");
   const {
     params: { id },
   } = req;
   try {
-    const video = await findById(id);
-    if (video.creator !== req.user.id) {
+    const video = await VideoModel.findById(id);
+    if (String(video.creator) !== String(req.user.id)) {
       const message = "비디오 삭제 권한이 없습니다.";
       routes.render("404", {
         pageTitle: "비디오 삭제 권한이 없습니다.",
         message,
       });
     } else {
-      await VideoModel.findByIdAndRemove({ _id: id });
+      await VideoModel.findByIdAndRemove(video.id);
     }
     res.redirect(routes.home);
   } catch (error) {

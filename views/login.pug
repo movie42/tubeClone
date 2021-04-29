@@ -2,7 +2,7 @@ extends layouts/layout
 
 
 block content 
-    h1 로그인
+    h1.head_title 로그인
     div.form_container
         form(action=routes.login, method="post")
             input(type="email", name="email", required=true, placeholder="아이디를 입력해주세요")
