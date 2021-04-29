@@ -1,4 +1,4 @@
 mixin videoBlock(video={})
-    a(href=`/video${routes.videoDetail(video.id)}`)=video.title
+    a(href=routes.videoDetail(video.id))=video.title
         video(src=`/${video.fileUrl}`, controls, width=720)
 

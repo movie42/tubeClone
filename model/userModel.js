@@ -19,10 +19,16 @@ const userSchema = new mongoose.Schema({
   },
   avatarUrl: String,
   githubId: Number,
-  Comment: [
+  comment: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
+    },
+  ],
+  videos: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Videos",
     },
   ],
 });

@@ -5,20 +5,24 @@ import routes from "../routes";
 
 export const getVideoUploadPage = (req, res) =>
   res.render("uploadVideo", { pageTitle: "비디오 업로드" });
-export const videoUpload = async (req, res) => {
+
+export const newVideoUpload = async (req, res) => {
   const {
     body: { title, description },
     file: { path },
   } = req;
   try {
-    const video = await VideoModel.create({
+    const newVideo = await VideoModel.create({
       title,
       fileUrl: path,
       description,
+      creator: req.user.id,
     });
-    res.redirect(`/video/${routes.videoDetail(video.id)}`);
+    req.user.videos.push(newVideo.id);
+    req.user.save();
+    res.redirect(routes.videoDetail(newVideo.id));
   } catch (err) {
-    conosle.log("Error!!", err);
+    console.log("Error!!", err);
     res.render("404", { pageTitle: "알수없는 에러가 발생했습니다." });
   }
 };
