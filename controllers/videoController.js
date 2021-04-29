@@ -1,4 +1,4 @@
-import VideoModel from "../model/videoModel";
+import Video from "../model/videoModel";
 import routes from "../routes";
 
 //video upload
@@ -12,7 +12,7 @@ export const newVideoUpload = async (req, res) => {
     file: { path },
   } = req;
   try {
-    const newVideo = await VideoModel.create({
+    const newVideo = await Video.create({
       title,
       fileUrl: path,
       description,
@@ -32,7 +32,7 @@ export const videoDetail = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const video = await VideoModel.findById(id);
+    const video = await Video.findById(id).populate("creator");
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     console.log(error);
@@ -46,7 +46,7 @@ export const getEditVideo = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const video = await VideoModel.findById(id);
+    const video = await Video.findById(id);
     if (String(video.creator) !== String(req.user.id)) {
       const message = "비디오 수정 권한이 없습니다.";
       res.render("404", { pageTitle: "비디오 수정 권한이 없습니다.", message });
@@ -63,7 +63,7 @@ export const postEditVideo = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const video = await VideoModel.findByIdAndUpdate(
+    const video = await Video.findByIdAndUpdate(
       {
         _id: id,
       },
@@ -80,24 +80,23 @@ export const postEditVideo = async (req, res) => {
 };
 
 export const deleteVideo = async (req, res) => {
-  console.log("hi");
   const {
     params: { id },
   } = req;
   try {
-    const video = await VideoModel.findById(id);
+    const video = await Video.findById(id);
     if (String(video.creator) !== String(req.user.id)) {
       const message = "비디오 삭제 권한이 없습니다.";
-      routes.render("404", {
+      res.render("404", {
         pageTitle: "비디오 삭제 권한이 없습니다.",
         message,
       });
     } else {
-      await VideoModel.findByIdAndRemove(video.id);
+      await Video.findByIdAndRemove({ _id: id });
+      res.redirect(routes.home);
     }
-    res.redirect(routes.home);
   } catch (error) {
     console.log(error);
-    res.redirect(`/video${routes.videoDetail(id)}`);
+    res.redirect(routes.videoDetail(id));
   }
 };

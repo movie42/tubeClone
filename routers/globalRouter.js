@@ -32,12 +32,11 @@ globalRouter.post(routes.join, onlyPublic, postJoin, postLogin);
 
 globalRouter.get(routes.github, githubLogin);
 
-globalRouter.get(routes.me, getMe);
-
 globalRouter.get(
   routes.githubCallback,
   passport.authenticate("github", { failureRedirect: "/login" }),
   postGithubLogin
 );
 
+globalRouter.get(routes.me, getMe);
 export default globalRouter;

@@ -1,10 +1,19 @@
 extends layouts/layout
+include mixins/videoBlock
 
 block content 
     h1.head_title 사용자 정보
+    h2 나의 정보
+    a(href=`/user${routes.editProfile}`).basic_btn_style 수정하기
     .userDetail_container 
-        h2=user.name
-        h2=user.email
-    a(href=`/user${routes.editProfile}`) 내 정보 수정하기
+        h3 이름 | #{user.name}
+        h3 이메일 | #{user.email}
+    h2 내가 올린 비디오
+    .content_container
+        each item in user.videos
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                fileUrl:item.fileUrl
+            })
 
-    

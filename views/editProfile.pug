@@ -2,7 +2,7 @@ extends layouts/layout
 
 block content 
     form(action=`/user${routes.editProfile}`, method="POST")
-        input(type="email", name="email", required=true, placeholder="이메일을 입력해주세요")
-        input(type="text", name="name", required=true, placeholder="이름을 입력해주세요")
+        input(type="email", name="email", required=true, placeholder="이메일을 입력해주세요", value=user.email)
+        input(type="text", name="name", required=true, placeholder="이름을 입력해주세요", value=user.name)
         input(type="submit", value="프로필 수정하기")
     a(href=`/user${routes.changePassword}`) 비밀번호 변경하기

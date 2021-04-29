@@ -1,7 +1,7 @@
 extends layouts/layout
 
 block content 
-    form(action=`/video${routes.editVideo(video.id)}`, method="post")
+    form(action=routes.editVideo(video.id), method="post")
         input(type="text", name="title", required=true, value=video.title)
         textarea(placeholder="내용을", name="description")=video.description
         input(type="submit", value="업로드")

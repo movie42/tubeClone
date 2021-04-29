@@ -1,6 +1,7 @@
 import passport from "passport";
 import routes from "../routes";
 import User from "../model/userModel";
+import Video from "../model/videoModel";
 
 export const githubLogin = passport.authenticate("github", {
   scope: ["user:email"],
@@ -39,13 +40,8 @@ export const logout = (req, res) => {
 };
 
 export const getMe = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id);
-    res.render("userDetail", { pageTitle: "사용자 정보", user });
-  } catch (error) {
-    console.log(error);
-    res.redirect(routes.home);
-  }
+  const user = await User.findById(req.user.id).populate("videos");
+  res.render("userDetail", { pageTitle: "사용자 정보", user });
 };
 
 export const userDetail = async (req, res) => {
@@ -53,7 +49,8 @@ export const userDetail = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate("videos");
+    console.log(user);
     res.render("userDetail", { pageTitle: "사용자 정보", user });
   } catch (error) {
     console.log(error);
@@ -62,7 +59,7 @@ export const userDetail = async (req, res) => {
 };
 
 export const getEditProfile = (req, res) =>
-  res.render("editProfile", { pageTitle: "프로필 수정" });
+  res.render("editProfile", { pageTitle: "프로필 수정", user: req.user });
 
 export const postEditProfile = async (req, res) => {
   const {

@@ -11,10 +11,10 @@ const CHANGE_PASSWORD = "/change-password";
 const ME = "/me";
 
 const VIDEO = "/video";
-const UPLOAD_VIDEO = "/upload-video";
+const UPLOAD_VIDEO = "/upload";
 const VIDEO_DETAIL = "/:id";
-const EDIT_VIDEO = "/:id/edit-video";
-const DELETE_VIDEO = "/:id/delete-video";
+const EDIT_VIDEO = "/:id/edit";
+const DELETE_VIDEO = "/:id/delete";
 
 // Github
 const GITHUB = "/auth/github";
@@ -28,7 +28,7 @@ const routes = {
   user: USER,
   userDetail: (id) => {
     if (id) {
-      return `/${id}`;
+      return `/user/${id}`;
     } else {
       return USER_DETAIL;
     }
@@ -46,14 +46,14 @@ const routes = {
   uploadVideo: UPLOAD_VIDEO,
   deleteVideo: (id) => {
     if (id) {
-      return `/video/${id}/delete-video`;
+      return `/video/${id}/delete`;
     } else {
       return DELETE_VIDEO;
     }
   },
   editVideo: (id) => {
     if (id) {
-      return `/${id}/edit-video`;
+      return `/video/${id}/edit`;
     } else {
       return EDIT_VIDEO;
     }
