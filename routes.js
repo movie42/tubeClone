@@ -6,8 +6,8 @@ const JOIN = "/join";
 
 const USER = "/user";
 const USER_DETAIL = "/:id";
-const EDIT_PROFILE = "/:id/edit-profile";
-const CHANGE_PASSWORD = "/:id/change-password";
+const EDIT_PROFILE = "/edit-profile";
+const CHANGE_PASSWORD = "/change-password";
 const ME = "/me";
 
 const VIDEO = "/video";
@@ -28,7 +28,7 @@ const routes = {
   user: USER,
   userDetail: (id) => {
     if (id) {
-      return `/user/${id}`;
+      return `/${id}`;
     } else {
       return USER_DETAIL;
     }

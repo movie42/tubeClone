@@ -38,8 +38,14 @@ export const logout = (req, res) => {
   res.redirect(routes.home);
 };
 
-export const getMe = (req, res) => {
-  res.render("userDetail", { pageTitle: "사용자 정보", user: req.user });
+export const getMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    res.render("userDetail", { pageTitle: "사용자 정보", user });
+  } catch (error) {
+    console.log(error);
+    res.redirect(routes.home);
+  }
 };
 
 export const userDetail = async (req, res) => {
@@ -55,5 +61,21 @@ export const userDetail = async (req, res) => {
   }
 };
 
-export const editProfile = (req, res) => res.render("editProfile");
-export const changePassword = (req, res) => res.render("changePassword");
+export const getEditProfile = (req, res) =>
+  res.render("editProfile", { pageTitle: "프로필 수정" });
+
+export const postEditProfile = async (req, res) => {
+  const {
+    body: { email, name },
+  } = req;
+  try {
+    await User.findByIdAndUpdate(req.user.id, { email, name });
+    res.redirect(routes.me);
+  } catch (error) {
+    console.log(error);
+    res.redirect(routes.home);
+  }
+};
+
+export const getChangePassword = (req, res) => res.render("changePassword");
+export const postChangePassword = (req, res) => res.render("changePassword");
