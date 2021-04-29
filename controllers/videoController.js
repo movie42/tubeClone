@@ -47,10 +47,14 @@ export const getEditVideo = async (req, res) => {
   } = req;
   try {
     const video = await VideoModel.findById(id);
-    res.render("editVideo", { pageTitle: video.title, video });
+    if (String(video.creator) !== String(req.user.id)) {
+      const message = "비디오 수정 권한이 없습니다.";
+      res.render("404", { pageTitle: "비디오 수정 권한이 없습니다.", message });
+    } else {
+      res.render("editVideo", { pageTitle: video.title, video });
+    }
   } catch (error) {
-    console.log(error);
-    res.redirect(routes.videoDetail(id));
+    res.redirect(routes.home);
   }
 };
 export const postEditVideo = async (req, res) => {
@@ -80,7 +84,16 @@ export const deleteVideo = async (req, res) => {
     params: { id },
   } = req;
   try {
-    await VideoModel.findByIdAndRemove(id);
+    const video = await findById(id);
+    if (video.creator !== req.user.id) {
+      const message = "비디오 삭제 권한이 없습니다.";
+      routes.render("404", {
+        pageTitle: "비디오 삭제 권한이 없습니다.",
+        message,
+      });
+    } else {
+      await VideoModel.findByIdAndRemove({ _id: id });
+    }
     res.redirect(routes.home);
   } catch (error) {
     console.log(error);
