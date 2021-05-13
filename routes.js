@@ -5,16 +5,16 @@ const LOGOUT = "/logout";
 const JOIN = "/join";
 
 const USER = "/user";
-const USER_DETAIL = "/:id(\\d+)";
+const USER_DETAIL = "/:id([0-9a-f]{24})";
 const EDIT_PROFILE = "/edit-profile";
 const CHANGE_PASSWORD = "/change-password";
 const ME = "/me";
 
 const VIDEO = "/video";
 const UPLOAD_VIDEO = "/upload";
-const VIDEO_DETAIL = "/:id(\\d+)";
-const EDIT_VIDEO = "/:id(\\d+)/edit";
-const DELETE_VIDEO = "/:id(\\d+)/delete";
+const VIDEO_DETAIL = "/:id([0-9a-f]{24})";
+const EDIT_VIDEO = "/:id([0-9a-f]{24})/edit";
+const DELETE_VIDEO = "/:id([0-9a-f]{24})/delete";
 
 // Github
 const GITHUB = "/auth/github";

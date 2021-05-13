@@ -181,3 +181,28 @@ webpack assets을 컴파일링 하는 과정에서 "Node Sass does not yet suppo
 
 나는 그 어떤 오류보다 이게 더 무섭다. 왜냐하면 분명 정확하게 입력했다고 생각할 떄가 많아서 왜 오류가 나는지 한참을 찾다가 보면 req를 rreq라고 썼거나 route라고 쓰는 등의 실수를 했기 떄문이다. 결국 결과가 무엇이냐고? 오늘 video 삭제가 분명 되어야하는데 계속 되지 않아서 거의 4시간을 view, controller, router를 헤매다가... req를 routes로 잘못 썼다는 것을 알게 되었다.
 아... 나는 내가 지금까지 배운것을 이해를 잘 못하고 있는 줄 알고 강의 2배속으로 전부 다 돌려보고... 쌩 난리를 쳤는데... 겨우 철자가 틀린거라니... 이 에러가 나는 가장 무섭다.
+
+### 12. code refactoring
+
+인터넷 서칭 혹은 강의를 들으면서 코드를 더 직관적으로 알아보기 쉽게 작성하는 방법을 알때마다 새로 작성하고 이곳에 하나씩 업데이트를 할 예정이다.
+
+#### 12-1. Router route().get().post()
+
+처음 express를 배울때 코드를 이렇게 작성했다.
+
+```[javascript]
+
+globalRouter.get("/login", getLogin)
+globalRouter.post("/login", postLogin)
+
+```
+
+그런데 이렇게 작성하는게 더 직관적이라 전부 다시 바꿨다.
+
+```[javascript]
+
+globalRouter.route('/login').get(getLogin).post(postLogin)
+
+```
+
+반복을 조금 더 줄이고 조금 더 직관적이게 볼 수 있다.
