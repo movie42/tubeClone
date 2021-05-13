@@ -5,16 +5,16 @@ const LOGOUT = "/logout";
 const JOIN = "/join";
 
 const USER = "/user";
-const USER_DETAIL = "/:id";
+const USER_DETAIL = "/:id(\\d+)";
 const EDIT_PROFILE = "/edit-profile";
 const CHANGE_PASSWORD = "/change-password";
 const ME = "/me";
 
 const VIDEO = "/video";
 const UPLOAD_VIDEO = "/upload";
-const VIDEO_DETAIL = "/:id";
-const EDIT_VIDEO = "/:id/edit";
-const DELETE_VIDEO = "/:id/delete";
+const VIDEO_DETAIL = "/:id(\\d+)";
+const EDIT_VIDEO = "/:id(\\d+)/edit";
+const DELETE_VIDEO = "/:id(\\d+)/delete";
 
 // Github
 const GITHUB = "/auth/github";

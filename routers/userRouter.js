@@ -11,11 +11,16 @@ import { onlyPrivate } from "../middleware";
 
 const userRouter = express.Router();
 
-userRouter.get(routes.editProfile, onlyPrivate, getEditProfile);
-userRouter.post(routes.editProfile, onlyPrivate, postEditProfile);
+userRouter
+  .route(routes.editProfile)
+  .get(onlyPrivate, getEditProfile)
+  .post(onlyPrivate, postEditProfile);
 
-userRouter.get(routes.changePassword, onlyPrivate, getChangePassword);
-userRouter.post(routes.changePassword, onlyPrivate, postChangePassword);
+userRouter
+  .route(routes.changePassword)
+  .get(onlyPrivate, getChangePassword)
+  .post(onlyPrivate, postChangePassword);
 
-userRouter.get(routes.userDetail(), onlyPrivate, userDetail);
+userRouter.route(routes.userDetail()).get(onlyPrivate, userDetail);
+
 export default userRouter;

@@ -19,7 +19,7 @@ export const newVideoUpload = async (req, res) => {
       creator: req.user.id,
     });
     req.user.videos.push(newVideo.id);
-    req.user.save();
+    await req.user.save();
     res.redirect(routes.videoDetail(newVideo.id));
   } catch (err) {
     console.log("Error!!", err);
@@ -63,7 +63,7 @@ export const postEditVideo = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const video = await Video.findByIdAndUpdate(
+    const video = Video.findByIdAndUpdate(
       {
         _id: id,
       },
@@ -72,6 +72,7 @@ export const postEditVideo = async (req, res) => {
         description,
       }
     );
+    await res.save();
     res.redirect(`/video${routes.videoDetail(video.id)}`);
   } catch (error) {
     console.log(error);

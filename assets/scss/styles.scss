@@ -12,7 +12,6 @@ body {
 }
 
 .header {
-  background-color: $basic_color;
   .nav {
     display: flex;
     padding: 0 20px;
@@ -20,8 +19,8 @@ body {
     justify-content: space-between;
     align-items: center;
     a {
+      color: inherit;
       font-size: $basic_fontSize;
-      color: white;
       font-weight: bold;
       text-decoration: none;
 
@@ -42,6 +41,7 @@ body {
 
 .main {
   margin: 20px 0;
+  min-height: 80vh;
   .head_title {
     font-weight: bolder;
     font-size: 2.5em;

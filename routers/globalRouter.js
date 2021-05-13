@@ -18,25 +18,30 @@ import {
 
 const globalRouter = express.Router();
 
-globalRouter.get(routes.home, home);
+globalRouter.route(routes.home).get(home);
 
 //login
-globalRouter.get(routes.login, onlyPublic, getLogin);
-globalRouter.post(routes.login, onlyPublic, postLogin);
+globalRouter
+  .route(routes.login)
+  .get(onlyPublic, getLogin)
+  .post(onlyPublic, postLogin);
 
-globalRouter.get(routes.logout, onlyPrivate, logout);
+globalRouter.route(routes.logout).get(onlyPrivate, logout);
 
 //join
-globalRouter.get(routes.join, onlyPublic, getJoin);
-globalRouter.post(routes.join, onlyPublic, postJoin, postLogin);
+globalRouter
+  .route(routes.join)
+  .get(onlyPublic, getJoin)
+  .post(onlyPublic, postJoin, postLogin);
 
-globalRouter.get(routes.github, githubLogin);
+globalRouter.route(routes.github).get(githubLogin);
 
-globalRouter.get(
-  routes.githubCallback,
-  passport.authenticate("github", { failureRedirect: "/login" }),
-  postGithubLogin
-);
+globalRouter
+  .route(routes.githubCallback)
+  .get(
+    passport.authenticate("github", { failureRedirect: "/login" }),
+    postGithubLogin
+  );
 
-globalRouter.get(routes.me, getMe);
+globalRouter.route(routes.me).get(getMe);
 export default globalRouter;
