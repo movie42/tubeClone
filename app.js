@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import passport, { session } from "passport";
-import globalRouter from "./routers/globalRouter";
+import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import routes from "./routes";
@@ -16,29 +16,34 @@ import "./passport";
 const app = express();
 
 app.use(helmet({ contentSecurityPolicy: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
 app.set("view engine", "pug");
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("static"));
 app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 app.use(
   expressSession({
     secret: process.env.SESSION_KEY,
     resave: true,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URL,
-    }),
+    saveUninitialized: true,
   })
 );
 
-app.use(passport.initialize());
-app.use(passport.session());
+
+// app.use(passport.initialize());
+// app.use(passport.session());
+app.use((req,res,next) => {
+  req.sessionStore.all((error, sessions)=>{
+    console.log(sessions);
+    next();
+  });
+});
+
 
 app.use(localMiddleware);
-app.use(routes.home, globalRouter);
+app.use(routes.home, rootRouter);
 app.use(routes.user, userRouter);
 app.use(routes.video, videoRouter);
 

@@ -1,6 +1,7 @@
 import passport from "passport";
 import routes from "../routes";
-import UserModel from "../model/userModel";
+import User from "../model/userModel";
+import bcrypt from "bcrypt";
 import VideoModel from "../model/videoModel";
 
 export const home = async (req, res) => {
@@ -17,33 +18,32 @@ export const getLogin = (req, res) => {
   res.render("login", { pageTitle: "로그인" });
 };
 
-export const postLogin = passport.authenticate("local", {
-  failureRedirect: routes.login,
-  successRedirect: routes.home,
-});
-
-export const getJoin = (req, res) => {
-  res.render("join", { pageTitle: "회원가입" });
-};
-
-export const postJoin = async (req, res, next) => {
-  const {
-    body: { email, name, password, password2 },
-  } = req;
-  if (password !== password2) {
-    res.status(400);
-    res.render("join", { pageTitle: "회원가입" });
-  } else {
-    try {
-      const user = await UserModel({
-        email,
-        name,
-      });
-      await UserModel.register(user, password);
-      next();
-    } catch (error) {
-      console.log(error);
-      res.redirect(routes.join);
-    }
+export const postLogin = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    res.status(400).render("login", {
+      pageTitle: "로그인",
+      errorMessage: "회원 정보가 존재하지 않습니다.",
+    });
   }
+  const confirm = await bcrypt.compare(
+    password,
+    user.password,
+  );
+  if (!confirm) {
+    res.status(400).render("login", {
+      pageTitle: "로그인",
+      errorMessage: "잘못된 비밀번호를 입력하였습니다.",
+    });
+  }
+
+  req.session.loggedin = true;
+  req.session.user = user;
+  return res.redirect(routes.home);
 };
+
+// export const postLogin = passport.authenticate("local", {
+//   failureRedirect: routes.login,
+//   successRedirect: routes.home,
+// });

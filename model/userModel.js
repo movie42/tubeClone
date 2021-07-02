@@ -1,17 +1,25 @@
+import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import passportLocalMongoose from "passport-local-mongoose";
 
 const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  userName: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   password: {
     type: String,
+    required: true,
   },
   createAt: {
     type: Date,
@@ -31,6 +39,10 @@ const userSchema = new mongoose.Schema({
       ref: "Video",
     },
   ],
+});
+
+userSchema.pre("save", async function () {
+  this.password = await bcrypt.hash(this.password, 5);
 });
 
 userSchema.plugin(passportLocalMongoose, {
