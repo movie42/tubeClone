@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  socialOnly: { type: Boolean, default: false },
   email: {
     type: String,
     required: true,
@@ -18,7 +19,6 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   createAt: {
     type: Date,

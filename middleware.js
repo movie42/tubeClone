@@ -16,7 +16,7 @@ export const localMiddleware = (req, res, next) => {
 };
 
 export const onlyPublic = (req, res, next) => {
-  if (req.user) {
+  if (req.session.user) {
     res.redirect(routes.home);
   } else {
     next();
@@ -24,7 +24,7 @@ export const onlyPublic = (req, res, next) => {
 };
 
 export const onlyPrivate = (req, res, next) => {
-  if (req.user) {
+  if (req.session.user) {
     next();
   } else {
     res.redirect(routes.home);

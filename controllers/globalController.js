@@ -19,7 +19,10 @@ export const getLogin = (req, res) => {
 
 export const postLogin = async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({
+    email,
+    socialOnly: false,
+  });
   if (!user) {
     res.status(400).render("login", {
       pageTitle: "로그인",
@@ -41,8 +44,3 @@ export const postLogin = async (req, res) => {
   req.session.user = user;
   return res.redirect(routes.home);
 };
-
-// export const postLogin = passport.authenticate("local", {
-//   failureRedirect: routes.login,
-//   successRedirect: routes.home,
-// });

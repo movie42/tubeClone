@@ -31,7 +31,7 @@ rootRouter
   .get(onlyPublic, getLogin)
   .post(onlyPublic, postLogin);
 
-rootRouter.route(routes.logout).get(onlyPrivate, logout);
+rootRouter.get(routes.logout, onlyPrivate, logout);
 
 rootRouter.route(routes.me).get(getMe);
 export default rootRouter;
