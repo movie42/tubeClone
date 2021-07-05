@@ -1,9 +1,7 @@
 import express from "express";
 import helmet from "helmet";
-import bodyParser from "body-parser";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
-import passport, { session } from "passport";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
@@ -11,13 +9,12 @@ import routes from "./routes";
 import { localMiddleware } from "./middleware";
 import expressSession from "express-session";
 import MongoStore from "connect-mongo";
-import "./passport";
 
 const app = express();
 
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json())
+app.use(express.json());
 app.set("view engine", "pug");
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("static"));
@@ -26,21 +23,23 @@ app.use(morgan("dev"));
 app.use(
   expressSession({
     secret: process.env.SESSION_KEY,
-    resave: true,
-    saveUninitialized: true,
-  })
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 864000000,
+    },
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URL,
+    }),
+  }),
 );
 
-
-// app.use(passport.initialize());
-// app.use(passport.session());
-app.use((req,res,next) => {
-  req.sessionStore.all((error, sessions)=>{
+app.use((req, res, next) => {
+  req.sessionStore.all((error, sessions) => {
     console.log(sessions);
     next();
   });
 });
-
 
 app.use(localMiddleware);
 app.use(routes.home, rootRouter);

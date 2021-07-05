@@ -17,8 +17,8 @@ const EDIT_VIDEO = "/:id([0-9a-f]{24})/edit";
 const DELETE_VIDEO = "/:id([0-9a-f]{24})/delete";
 
 // Github
-const GITHUB = "/auth/github";
-const GITHUB_CALLBACK = "/auth/github/callback";
+const GITHUB =
+  "https://github.com/login/oauth/authorize?client_id=7154b3cc912399ec3d69";
 
 const routes = {
   home: HOME,
@@ -59,7 +59,6 @@ const routes = {
     }
   },
   github: GITHUB,
-  githubCallback: GITHUB_CALLBACK,
   me: ME,
 };
 

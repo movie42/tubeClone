@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import passportLocalMongoose from "passport-local-mongoose";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -43,10 +42,6 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, 5);
-});
-
-userSchema.plugin(passportLocalMongoose, {
-  usernameField: "email",
 });
 
 const model = mongoose.model("User", userSchema);
