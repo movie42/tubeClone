@@ -1,8 +1,8 @@
 import routes from "../routes";
+import bcrypt from "bcrypt";
 import User from "../model/userModel";
 import fetch from "node-fetch";
 import Video from "../model/videoModel";
-import session from "express-session";
 
 export const getJoin = (req, res) => {
   res.render("join", { pageTitle: "회원가입" });
@@ -214,7 +214,40 @@ export const callbackGithubLogin = async (req, res) => {
   }
 };
 
-export const getChangePassword = (req, res) =>
-  res.render("changePassword");
-export const postChangePassword = (req, res) =>
-  res.render("changePassword");
+export const getChangePassword = (req, res) => {
+  if (req.session.user.socialOnly === true) {
+    return res.redirect("/");
+  }
+  res.render("changePassword", {
+    pageTitle: "비밀번호 변경",
+  });
+};
+
+export const postChangePassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { oldPassword, newPassword, newPassword2 },
+  } = req;
+  const user = await User.findById(_id);
+  const confirm = await bcrypt.compare(
+    oldPassword,
+    user.password,
+  );
+  if (!confirm) {
+    return res.status(400).render("changePassword", {
+      pageTitle: "비민번호 변경",
+      errorMessage: "기존의 비밀번호가 일치하지 않습니다.",
+    });
+  }
+  if (newPassword !== newPassword2) {
+    return res.status(400).render("changePassword", {
+      pageTitle: "비민번호 변경",
+      errorMessage: "새로운 비밀번호가 일치하지 않습니다.",
+    });
+  }
+  user.password = newPassword;
+  await user.save();
+  return res.redirect(routes.logout);
+};

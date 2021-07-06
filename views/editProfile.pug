@@ -8,4 +8,5 @@ block content
         input(type="email", name="email", required, placeholder="이메일을 입력해주세요", value=user.email)
         input(type="text", name="userName", required, placeholder="이메일을 입력해주세요", value=user.userName)
         input(type="submit", value="프로필 수정하기")
-    a(href=`/user${routes.changePassword}`) 비밀번호 변경하기
+    if !user.socialOnly
+        a(href='change-password') 비밀번호 변경하기

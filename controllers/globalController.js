@@ -24,7 +24,7 @@ export const postLogin = async (req, res) => {
     socialOnly: false,
   });
   if (!user) {
-    res.status(400).render("login", {
+    return res.status(400).render("login", {
       pageTitle: "로그인",
       errorMessage: "회원 정보가 존재하지 않습니다.",
     });
@@ -34,12 +34,11 @@ export const postLogin = async (req, res) => {
     user.password,
   );
   if (!confirm) {
-    res.status(400).render("login", {
+    return res.status(400).render("login", {
       pageTitle: "로그인",
       errorMessage: "잘못된 비밀번호를 입력하였습니다.",
     });
   }
-
   req.session.loggedIn = true;
   req.session.user = user;
   return res.redirect(routes.home);
