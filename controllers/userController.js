@@ -105,7 +105,17 @@ export const postEditProfile = async (req, res) => {
   ) {
     try {
       // email, name이 이미 있는 경우를 체크해야한다.
+      const exists = await User.exists({
+        $or: [{ userName }, { email }],
+      });
 
+      if (exists) {
+        return res.status(400).render("editProfile", {
+          pageTitle: "프로필 수정",
+          errorMessage:
+            "이미 사용하고 있는 닉네임 혹은 가입된 이메일입니다.",
+        });
+      }
       const updateUser = await User.findByIdAndUpdate(
         _id,
         {
