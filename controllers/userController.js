@@ -2,6 +2,7 @@ import routes from "../routes";
 import User from "../model/userModel";
 import fetch from "node-fetch";
 import Video from "../model/videoModel";
+import session from "express-session";
 
 export const getJoin = (req, res) => {
   res.render("join", { pageTitle: "회원가입" });
@@ -51,15 +52,15 @@ export const logout = (req, res) => {
   return res.redirect(routes.home);
 };
 
-export const getMe = async (req, res) => {
-  const user = await User.findById(req.user.id).populate(
-    "videos",
-  );
-  res.render("userDetail", {
-    pageTitle: "사용자 정보",
-    user,
-  });
-};
+// export const getMe = async (req, res) => {
+//   // const user = await User.findById(req.user.id).populate(
+//   //   "videos",
+//   // );
+//   res.render("userDetail", {
+//     pageTitle: "사용자 정보",
+//     user,
+//   });
+// };
 
 export const userDetail = async (req, res) => {
   const {
@@ -78,25 +79,51 @@ export const userDetail = async (req, res) => {
   }
 };
 
-export const getEditProfile = (req, res) =>
-  res.render("editProfile", {
+export const getEditProfile = (req, res) => {
+  return res.render("editProfile", {
     pageTitle: "프로필 수정",
-    user: req.user,
   });
+};
 
 export const postEditProfile = async (req, res) => {
   const {
-    body: { email, name },
+    session: {
+      user: {
+        _id,
+        name: sessionName,
+        email: sessionEmail,
+        userName: sessionUserName,
+      },
+    },
+    body: { name, email, userName },
   } = req;
-  try {
-    await User.findByIdAndUpdate(req.user.id, {
-      email,
-      name,
-    });
-    res.redirect(routes.me);
-  } catch (error) {
-    console.log(error);
-    res.redirect(routes.home);
+  // session과 form의 정보가 다르면 바꾼다는 것이다.
+  if (
+    sessionName !== name ||
+    sessionEmail !== email ||
+    sessionUserName !== userName
+  ) {
+    try {
+      // email, name이 이미 있는 경우를 체크해야한다.
+
+      const updateUser = await User.findByIdAndUpdate(
+        _id,
+        {
+          email,
+          userName,
+          name,
+        },
+        { new: true },
+      );
+
+      req.session.user = updateUser;
+      res.redirect(`/user${routes.editProfile}`);
+    } catch (error) {
+      console.log(error);
+      res.redirect(routes.home);
+    }
+  } else {
+    return res.redirect(`/`);
   }
 };
 
@@ -169,7 +196,7 @@ export const callbackGithubLogin = async (req, res) => {
         socialOnly: true,
       });
     }
-    req.session.loggedin = true;
+    req.session.loggedIn = true;
     req.session.user = user;
     return res.redirect("/");
   } else {

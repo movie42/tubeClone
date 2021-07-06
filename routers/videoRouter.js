@@ -17,14 +17,18 @@ videoRouter.route(routes.videoDetail()).get(videoDetail);
 //edit video
 videoRouter
   .route(routes.editVideo())
-  .get(onlyPrivate, getEditVideo)
-  .post(onlyPrivate, postEditVideo);
+  .all(onlyPrivate)
+  .get(getEditVideo)
+  .post(postEditVideo);
 
-videoRouter.route(routes.deleteVideo()).get(onlyPrivate, deleteVideo);
+videoRouter
+  .route(routes.deleteVideo())
+  .get(onlyPrivate, deleteVideo);
 
 // video upload
 videoRouter
   .route(routes.uploadVideo)
-  .get(onlyPrivate, getVideoUploadPage)
-  .post(onlyPrivate, uploadVideo, newVideoUpload);
+  .all(onlyPrivate)
+  .get(getVideoUploadPage)
+  .post(uploadVideo, newVideoUpload);
 export default videoRouter;

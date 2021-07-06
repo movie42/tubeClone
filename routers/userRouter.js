@@ -9,25 +9,36 @@ import {
   startGithubLogin,
   callbackGithubLogin,
 } from "../controllers/userController";
-import { onlyPrivate } from "../middleware";
+import { onlyPrivate, onlyPublic } from "../middleware";
 
 const userRouter = express.Router();
 
 userRouter
   .route(routes.editProfile)
-  .get(onlyPrivate, getEditProfile)
-  .post(onlyPrivate, postEditProfile);
+  .all(onlyPrivate)
+  .get(getEditProfile)
+  .post(postEditProfile);
 
 userRouter
   .route(routes.changePassword)
-  .get(onlyPrivate, getChangePassword)
-  .post(onlyPrivate, postChangePassword);
+  .all(onlyPrivate)
+  .get(getChangePassword)
+  .post(postChangePassword);
 
 userRouter
   .route(routes.userDetail())
-  .get(onlyPrivate, userDetail);
+  .all(onlyPrivate)
+  .get(userDetail);
 
-userRouter.get("/github/start", startGithubLogin);
-userRouter.get("/github/callback", callbackGithubLogin);
+userRouter.get(
+  "/github/start",
+  onlyPublic,
+  startGithubLogin,
+);
+userRouter.get(
+  "/github/callback",
+  onlyPublic,
+  callbackGithubLogin,
+);
 
 export default userRouter;

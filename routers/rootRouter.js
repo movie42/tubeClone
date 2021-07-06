@@ -12,7 +12,7 @@ import {
 import { onlyPrivate, onlyPublic } from "../middleware";
 import {
   logout,
-  getMe,
+  userDetail,
 } from "../controllers/userController";
 
 const rootRouter = express.Router();
@@ -20,18 +20,20 @@ const rootRouter = express.Router();
 //join
 rootRouter
   .route(routes.join)
-  .get(onlyPublic, getJoin)
-  .post(onlyPublic, postJoin, postLogin);
+  .all(onlyPublic)
+  .get(getJoin)
+  .post(postJoin, postLogin);
 
 rootRouter.route(routes.home).get(home);
 
 //login
 rootRouter
   .route(routes.login)
-  .get(onlyPublic, getLogin)
-  .post(onlyPublic, postLogin);
+  .all(onlyPublic)
+  .get(getLogin)
+  .post(postLogin);
 
 rootRouter.get(routes.logout, onlyPrivate, logout);
 
-rootRouter.route(routes.me).get(getMe);
+rootRouter.route(routes.me).get(userDetail);
 export default rootRouter;

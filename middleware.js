@@ -11,22 +11,23 @@ export const uploadAvatar =
 export const localMiddleware = (req, res, next) => {
   res.locals.webTitle = "클론튜브";
   res.locals.routes = routes;
-  res.locals.loggedUser = req.session.loggedin;
+  res.locals.loggedUser = Boolean(req.session.loggedIn);
+  res.locals.user = req.session.user || {};
   next();
 };
 
 export const onlyPublic = (req, res, next) => {
-  if (req.session.user) {
-    res.redirect(routes.home);
+  if (req.session.loggedIn) {
+    return res.redirect(routes.home);
   } else {
-    next();
+    return next();
   }
 };
 
 export const onlyPrivate = (req, res, next) => {
-  if (req.session.user) {
-    next();
+  if (req.session.loggedIn) {
+    return next();
   } else {
-    res.redirect(routes.home);
+    return res.redirect(routes.login);
   }
 };
