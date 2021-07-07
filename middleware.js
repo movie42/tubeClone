@@ -1,12 +1,22 @@
 import routes from "./routes";
 import multer from "multer";
 
-const multerVideo = multer({ dest: "uploads/video/" });
-const multerAvatar = multer({ dest: "uploads/avatar/" });
+const multerVideo = multer({
+  dest: "uploads/video/",
+  limits: {
+    fileSize: 10000000,
+  },
+});
 
-export const uploadVideo = multerVideo.single("videoFile");
-export const uploadAvatar =
-  multerAvatar.single("avatarFile");
+const multerAvatar = multer({
+  dest: "uploads/avatar/",
+  limits: {
+    fileSize: 3000000,
+  },
+});
+
+export const uploadVideo = multerVideo.single("video");
+export const uploadAvatar = multerAvatar.single("avatar");
 
 export const localMiddleware = (req, res, next) => {
   res.locals.webTitle = "클론튜브";

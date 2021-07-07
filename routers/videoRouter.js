@@ -31,4 +31,5 @@ videoRouter
   .all(onlyPrivate)
   .get(getVideoUploadPage)
   .post(uploadVideo, newVideoUpload);
+
 export default videoRouter;

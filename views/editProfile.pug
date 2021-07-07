@@ -3,7 +3,10 @@ extends layouts/layout
 block content 
     if errorMessage 
         h2=errorMessage
-    form(action=`/user${routes.editProfile}`, method="POST")
+    img(src=`/${user.avatar}`, style="width:100px; height:100px")
+    form(method="POST", enctype="multipart/form-data")
+        label(for="avartar") 프로필 사진
+        input(type="file", id="avatar", name="avatar", accept="image/*")
         input(type="text", name="name", required, placeholder="이름을 입력해주세요", value=user.name)
         input(type="email", name="email", required, placeholder="이메일을 입력해주세요", value=user.email)
         input(type="text", name="userName", required, placeholder="이메일을 입력해주세요", value=user.userName)

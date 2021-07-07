@@ -6,6 +6,7 @@ block content
     h2 나의 정보
     a(href=`/user${routes.editProfile}`).basic_btn_style 수정하기
     .userDetail_container 
+        img(src=`/${user.avatar}`, style="width:50px; height:50px")
         h3 이름 | #{user.name}
         h3 이메일 | #{user.email}
     h2 내가 올린 비디오

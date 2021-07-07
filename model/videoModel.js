@@ -3,15 +3,15 @@ import mongoose from "mongoose";
 const videoSchema = mongoose.Schema({
   fileUrl: {
     type: String,
-    required: "File URL is required",
+    required: true,
   },
   title: {
     type: String,
-    required: "title is required",
+    required: true,
   },
   description: {
     type: String,
-    required: "description is required",
+    required: true,
   },
   view: {
     type: Number,
@@ -29,6 +29,7 @@ const videoSchema = mongoose.Schema({
   ],
   creator: {
     type: mongoose.Schema.Types.ObjectId,
+    required: true,
     ref: "User",
   },
 });

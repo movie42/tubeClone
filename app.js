@@ -15,24 +15,21 @@ const app = express();
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.set("view engine", "pug");
-app.use("/uploads", express.static("uploads"));
-app.use("/static", express.static("static"));
 app.use(cookieParser());
-app.use(morgan("dev"));
 app.use(
   expressSession({
     secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      maxAge: 864000000,
-    },
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URL,
     }),
   }),
 );
+app.set("view engine", "pug");
+app.use("/uploads", express.static("uploads"));
+app.use("/static", express.static("static"));
+app.use(morgan("dev"));
 
 app.use((req, res, next) => {
   req.sessionStore.all((error, sessions) => {

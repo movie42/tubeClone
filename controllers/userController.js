@@ -68,14 +68,19 @@ export const userDetail = async (req, res) => {
   } = req;
   try {
     const user = await User.findById(id).populate("videos");
-    console.log(user);
-    res.render("userDetail", {
+    if (!user) {
+      return res.status(404).render("404", {
+        pageTitle: "사용자를 찾을 수 없습니다.",
+        errorMessage: "사용자를 찾을 수 없습니다.",
+      });
+    }
+    return res.render("userDetail", {
       pageTitle: "사용자 정보",
       user,
     });
   } catch (error) {
     console.log(error);
-    res.redirect(routes.home);
+    return res.status(400).redirect(routes.home);
   }
 };
 
@@ -93,12 +98,16 @@ export const postEditProfile = async (req, res) => {
         name: sessionName,
         email: sessionEmail,
         userName: sessionUserName,
+        avatar: sessionAvatar,
       },
     },
     body: { name, email, userName },
+    file,
   } = req;
   // session과 form의 정보가 다르면 바꾼다는 것이다.
+
   if (
+    file !== undefined ||
     sessionName !== name ||
     sessionEmail !== email ||
     sessionUserName !== userName
@@ -119,21 +128,21 @@ export const postEditProfile = async (req, res) => {
       const updateUser = await User.findByIdAndUpdate(
         _id,
         {
+          avatar: file ? file.path : sessionAvatar,
           email,
           userName,
           name,
         },
         { new: true },
       );
-
       req.session.user = updateUser;
-      res.redirect(`/user${routes.editProfile}`);
+      return res.redirect(`/user${routes.editProfile}`);
     } catch (error) {
       console.log(error);
-      res.redirect(routes.home);
+      return res.redirect(routes.home);
     }
   } else {
-    return res.redirect(`/`);
+    return res.redirect("/");
   }
 };
 
