@@ -52,23 +52,15 @@ export const logout = (req, res) => {
   return res.redirect(routes.home);
 };
 
-// export const getMe = async (req, res) => {
-//   // const user = await User.findById(req.user.id).populate(
-//   //   "videos",
-//   // );
-//   res.render("userDetail", {
-//     pageTitle: "사용자 정보",
-//     user,
-//   });
-// };
-
 export const userDetail = async (req, res) => {
   const {
     params: { id },
   } = req;
   try {
-    const user = await User.findById(id).populate("videos");
-    if (!user) {
+    const userData = await User.findById(id).populate(
+      "videos",
+    );
+    if (!userData) {
       return res.status(404).render("404", {
         pageTitle: "사용자를 찾을 수 없습니다.",
         errorMessage: "사용자를 찾을 수 없습니다.",
@@ -76,7 +68,7 @@ export const userDetail = async (req, res) => {
     }
     return res.render("userDetail", {
       pageTitle: "사용자 정보",
-      user,
+      userData,
     });
   } catch (error) {
     console.log(error);

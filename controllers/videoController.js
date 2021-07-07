@@ -1,4 +1,5 @@
 import Video from "../model/videoModel";
+import User from "../model/userModel";
 import routes from "../routes";
 
 //video upload
@@ -21,8 +22,9 @@ export const newVideoUpload = async (req, res) => {
       description,
       creator: _id,
     });
-    // req.session.user.videos.push(newVideo.id);
-    // await req.session.user.save();
+    const user = await User.findById(_id);
+    user.videos.push(newVideo._id);
+    await user.save();
     return res.redirect(routes.home);
   } catch (err) {
     console.log("Error!!", err);
@@ -40,13 +42,13 @@ export const videoDetail = async (req, res) => {
     const video = await Video.findById(id).populate(
       "creator",
     );
-    res.render("videoDetail", {
+    return res.render("videoDetail", {
       pageTitle: video.title,
       video,
     });
   } catch (error) {
     console.log(error);
-    res.status(404).render("404", {
+    return res.status(404).render("404", {
       pageTitle: "404 페이지를 찾을 수 가 없습니다.",
     });
   }
@@ -56,30 +58,31 @@ export const videoDetail = async (req, res) => {
 export const getEditVideo = async (req, res) => {
   const {
     params: { id },
+    session: { _id },
   } = req;
   try {
     const video = await Video.findById(id);
-    if (String(video.creator) !== String(req.user.id)) {
-      const message = "비디오 수정 권한이 없습니다.";
-      res.status(400).render("404", {
-        pageTitle: "비디오 수정 권한이 없습니다.",
-        message,
-      });
+    if (String(video.creator) !== String(_id)) {
+      return res.status(403).redirect("/");
     } else {
-      res.render("editVideo", {
+      return res.render("editVideo", {
         pageTitle: video.title,
         video,
       });
     }
   } catch (error) {
-    res.redirect(routes.home);
+    return res.redirect(routes.home);
   }
 };
 export const postEditVideo = async (req, res) => {
   const {
+    session: { _id },
     body: { title, description },
     params: { id },
   } = req;
+  if (String(video.creator) !== String(_id)) {
+    return res.status(403).redirect("/");
+  }
   try {
     const video = Video.findByIdAndUpdate(
       {
@@ -91,10 +94,12 @@ export const postEditVideo = async (req, res) => {
       },
     );
     await res.save();
-    res.redirect(`/video${routes.videoDetail(video.id)}`);
+    return res.redirect(
+      `/video${routes.videoDetail(video.id)}`,
+    );
   } catch (error) {
     console.log(error);
-    res.status(404).render("404", {
+    return res.status(404).render("404", {
       pageTitle: "페이지를 찾을 수 없습니다.",
     });
   }
@@ -102,22 +107,20 @@ export const postEditVideo = async (req, res) => {
 
 export const deleteVideo = async (req, res) => {
   const {
+    session: { _id },
     params: { id },
   } = req;
   try {
     const video = await Video.findById(id);
-    if (String(video.creator) !== String(req.user.id)) {
+    if (String(video.creator) !== String(_id)) {
       const message = "비디오 삭제 권한이 없습니다.";
-      res.status(404).render("404", {
-        pageTitle: "비디오 삭제 권한이 없습니다.",
-        message,
-      });
+      return res.status(404).redirect("/");
     } else {
       await Video.findByIdAndRemove({ _id: id });
-      res.redirect(routes.home);
+      return res.redirect(routes.home);
     }
   } catch (error) {
     console.log(error);
-    res.redirect(routes.videoDetail(id));
+    return res.redirect(routes.videoDetail(id));
   }
 };

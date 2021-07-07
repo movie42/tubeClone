@@ -4,14 +4,15 @@ include mixins/videoBlock
 block content 
     h1.head_title 사용자 정보
     h2 나의 정보
-    a(href=`/user${routes.editProfile}`).basic_btn_style 수정하기
+    if  user.id === userData.id
+        a(href=`/user${routes.editProfile}`).basic_btn_style 수정하기
     .userDetail_container 
-        img(src=`/${user.avatar}`, style="width:50px; height:50px")
-        h3 이름 | #{user.name}
-        h3 이메일 | #{user.email}
+        img(src=`/${userData.avatar}`, style="width:50px; height:50px")
+        h3 이름 | #{userData.name}
+        h3 이메일 | #{userData.email}
     h2 내가 올린 비디오
     .content_container
-        each item in user.videos
+        each item in userData.videos
             +videoBlock({
                 id:item.id,
                 title:item.title,
