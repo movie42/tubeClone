@@ -119,6 +119,16 @@ passport를 통해 serialization, deserialization을 설정하고 가입과 동�
 
 만약 이 모든 과정을 vanilla nodejs로 만든다면 어떻게 될까? 꽤나 복잡한 과정을 거치게 될 것이다. 하지만 저레벨 수준에서 어떤 일이 일어나고 있는지 아직 이해가 안된다. 이 부분은 공부한 다음에 보충해보고싶다.
 
+### 8-4 session과 cookie를 passport없이 하기
+
+생각보다 매우 간단하다. req값을 조회하면 session값이 있는 것을 알 수 있다. 로그인을 할 때, req.session값에 object값으로 user정보와 logging이 된 유저인지를 확인하는 값을 내가 저장하면 session값에 user가 로그인을 했는지 안했는지는 알 수 있다. 그러나 session은 저장되지 않는다. 이 문제를 해결하기 위해서는 mongostore를 이용해서 session값을 db에 저장한다. 어차피 브라우저에 있는 key값과 db에 있는 key값을 비교해서 사용자가 로그인한 사용자인지 아닌지를 알고 있기 때문에 db를 이용해서 로그인을 계속 유지할 수 있다. session만료는 기본적으로 14일이지만 내가 커스텀을 해서 조절할 수 있다.
+
+github login도 passport를 쓰지 않고 할 수 있다.
+
+1. github에서 제공하는 authentication url로 접근하게 한다.
+2. github에서 받은 client key와 secrect key 그리고 authentication url에 접근한 다음 github에 로그인 한 뒤에 나의 정보에 접근하는 것을 허용하면 param값에 주어지는 key값이 있는데 이 세가지를 이용해서 github 로그인을 허용하게한다.
+3. db에 github로그인을 했을 때, 사용자 정보를 저장한다.
+
 ### 8-4. github login
 
 passport strategies를 사용하여 socail login을 만들어보았다. 나는 보니까 passport-github2가 있어서 그것을 사용하였다. 문서를 보고 차근 차근 따라하면 되고 github에서 내가 현재 사용하고 있는 url을 OAuth에 등록하면 된다.
