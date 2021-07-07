@@ -1,51 +1,44 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
-const MODE = process.env.WEBPACK_ENV;
-
-const ENTRY_FILE = path.resolve(__dirname, "assets", "js", "main.js");
-const OUTPUT_DIR = path.join(__dirname, "static");
-
-const config = {
-  entry: ENTRY_FILE,
-  mode: MODE,
+module.exports = {
+  entry: "./assets/js/main.js",
+  mode: "development",
+  watch: true,
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/styles.css",
+    }),
+  ],
+  output: {
+    filename: "js/main.js",
+    path: path.resolve(__dirname, "static"),
+    clean: true,
+  },
   module: {
     rules: [
       {
-        test: /\.(scss)$/,
+        test: /\.js$/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [
+              [
+                "@babel/preset-env",
+                { targets: "defaults" },
+              ],
+            ],
+          },
+        },
+      },
+      {
+        test: /\.scss$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: "css-loader",
-          },
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions: {
-                plugins: [["autoprefixer"]],
-              },
-            },
-          },
-          {
-            loader: "sass-loader",
-          },
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "sass-loader",
         ],
       },
     ],
   },
-  output: {
-    path: OUTPUT_DIR,
-    filename: "[name].js",
-  },
-  plugins: [
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
-      filename: "styles.css",
-    }),
-  ],
 };
-
-module.exports = config;
