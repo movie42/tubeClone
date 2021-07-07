@@ -216,3 +216,26 @@ globalRouter.route('/login').get(getLogin).post(postLogin)
 ```
 
 반복을 조금 더 줄이고 조금 더 직관적이게 볼 수 있다.
+
+### 12-2. all()
+
+로그인 된 사용자와 그렇지 않은 사용자를 우회하도록 할 때 미들웨어를 이용할 수 있다. 미들웨어로 만든 함수는 controller에서 사용할 수 있는데 그럴때 all을 쓰면 편리하게 설정할 수 있다.
+golbalRouter.router('/').all(private).get(getHome).post(postHome)
+
+### 12-3. status()
+
+비밀번호 설정 오류나 기타 다른 오류를 설정한 다음에 보통 return 문으로 redriect를 하는데 status코드를 사용하여 해당 명령의 상태가 bad request인지 아닌지를 판별 해주는 것이 좋다.
+
+```[javascript]
+try{
+  ...
+}catch(error){
+  return res.status(400).redirect('/');
+}
+```
+
+status코드를 사용하면 해당 request값을 브라우저가 선택적으로 저장하거나 버린다.
+
+### 12-4. populate('ref')
+
+mongoose에서 데이터베이스를 서로 관계하도록 설정하면 populate를 사용하여 데이터를 쉽게 불러올 수 있다. 예를 들어 video를 만들 때, user id값을 저장하도록 명령하면 video 데이터 베이스의 사용자 id 정보를 나중에 불러올 수 있는데, 그 값을 가지고 video의 세부 정보를 불러오거나 현재 세션에 저장된 user와 video를 생성한 user가 같은지 비교하여 수정, 삭제 권한을 설정하는 것이 가능하다.
