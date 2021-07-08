@@ -158,5 +158,5 @@ export const registerComment = async (req, res) => {
   await video.save();
   userComment.comment.push(comment._id);
   await userComment.save();
-  return res.sendStatus(201);
+  return res.status(201).json({ newComment: comment._id });
 };

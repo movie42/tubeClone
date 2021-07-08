@@ -21,7 +21,7 @@ block content
         .videoCommentsBox 
             ul.video_comments
                 each comment in video.comment
-                    li.video_comment
+                    li.video_comment(data-id=comment.id)
                         span #{comment.text}
     script(src="/static/js/comments.js") 
     script(src="/static/js/videos.js") 

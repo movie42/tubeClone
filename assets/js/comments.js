@@ -10,15 +10,16 @@ const commentTextArea =
 
 const commentBtn = commentForm.querySelector("button");
 
-const addComment = (text) => {
+const addComment = (text, id) => {
   const videoComments = document.querySelector(
     ".video_comments",
   );
   const newComment = document.createElement("li");
   const span = document.createElement("span");
   span.innerText = ` ${text}`;
-  newComment.appendChild(span);
   newComment.className = "video_comment";
+  newComment.dataset.id = id;
+  newComment.appendChild(span);
   videoComments.prepend(newComment);
 };
 
@@ -29,7 +30,7 @@ const handleAddComment = async (event) => {
   if (text === "") {
     return "";
   }
-  const { status } = await fetch(
+  const response = await fetch(
     `/api/video/${id}/comments`,
     {
       method: "POST",
@@ -37,9 +38,10 @@ const handleAddComment = async (event) => {
       body: JSON.stringify({ text }),
     },
   );
-  commentTextArea.value = "";
-  if (status === 201) {
-    addComment(text);
+  if (response.status === 201) {
+    commentTextArea.value = "";
+    const { newComment } = await response.json();
+    addComment(text, newComment);
   }
 };
 
