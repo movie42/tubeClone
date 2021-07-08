@@ -2,7 +2,11 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
 module.exports = {
-  entry: "./assets/js/main.js",
+  entry: {
+    main: "./assets/js/main.js",
+    comments: "./assets/js/comments.js",
+    videos: "./assets/js/videos.js",
+  },
   mode: "development",
   watch: true,
   plugins: [
@@ -11,7 +15,7 @@ module.exports = {
     }),
   ],
   output: {
-    filename: "js/main.js",
+    filename: "js/[name].js",
     path: path.resolve(__dirname, "static"),
     clean: true,
   },
@@ -25,7 +29,12 @@ module.exports = {
             presets: [
               [
                 "@babel/preset-env",
-                { targets: "defaults" },
+                {
+                  targets: {
+                    browsers: ["last 2 chrome versions"],
+                  },
+                  debug: true,
+                },
               ],
             ],
           },

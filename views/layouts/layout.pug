@@ -6,7 +6,10 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title #{pageTitle} | #{webTitle}
         link(rel="stylesheet", href="/static/css/styles.css")
-    body 
+    body
+        if messages.error
+            div#flashMessages
+                p=messages.error
         include ../partials/header
         main.main
             block content

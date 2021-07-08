@@ -2,7 +2,8 @@ extends layouts/layout
 
 block content 
     h1=video.title
-    video(src=`/${video.fileUrl}`, controls, width="720")
+    div#videoController(data-id=video._id)
+        video(src=`/${video.fileUrl}`, controls, width="720")
     p=video.description
     div 
         span views 
@@ -10,4 +11,18 @@ block content
         a(href=routes.userDetail(video.creator.id))=video.creator.name
     if String(user._id) === String(video.creator.id)
         a(href=routes.editVideo(video.id)) 비디오 수정
+    div.videoComments
+        if !loggedUser
+            a(href=routes.login) 로그인을 해야 댓글을 작성할 수 있습니다.
+        else
+            form
+                textarea(cols="100", rows="5", placeholder="댓글을 입력해주세요.")
+                button 댓글등록
+        .videoCommentsBox 
+            ul.video_comments
+                each comment in video.comment
+                    li.video_comment
+                        span #{comment.text}
+    script(src="/static/js/comments.js") 
+    script(src="/static/js/videos.js") 
     

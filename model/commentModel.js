@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const CommentSchema = new mongoose.Schema({
   text: {
     type: String,
-    required: "text is required",
+    required: true,
   },
   createAt: {
     type: Date,
@@ -11,7 +11,13 @@ const CommentSchema = new mongoose.Schema({
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
+    required: true,
     ref: "User",
+  },
+  video: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Video",
   },
 });
 

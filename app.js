@@ -5,10 +5,12 @@ import cookieParser from "cookie-parser";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
+import apiRouter from "./routers/apiRouter";
+import expressSession from "express-session";
+import flash from "express-flash";
+import MongoStore from "connect-mongo";
 import routes from "./routes";
 import { localMiddleware } from "./middleware";
-import expressSession from "express-session";
-import MongoStore from "connect-mongo";
 
 const app = express();
 
@@ -38,6 +40,8 @@ app.use((req, res, next) => {
 });
 
 app.use(localMiddleware);
+app.use(flash());
+app.use("/api", apiRouter);
 app.use(routes.home, rootRouter);
 app.use(routes.user, userRouter);
 app.use(routes.video, videoRouter);

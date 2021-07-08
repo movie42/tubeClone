@@ -1,5 +1,6 @@
 import routes from "./routes";
 import multer from "multer";
+import flash from "express-flash";
 
 const multerVideo = multer({
   dest: "uploads/video/",
@@ -28,6 +29,7 @@ export const localMiddleware = (req, res, next) => {
 
 export const onlyPublic = (req, res, next) => {
   if (req.session.loggedIn) {
+    req.flash("error", "접근할 수 없습니다.");
     return res.redirect(routes.home);
   } else {
     return next();
@@ -38,6 +40,7 @@ export const onlyPrivate = (req, res, next) => {
   if (req.session.loggedIn) {
     return next();
   } else {
+    req.flash("error", "로그인이 필요합니다.");
     return res.redirect(routes.login);
   }
 };
