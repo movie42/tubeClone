@@ -4,16 +4,12 @@ import {
   home,
   getLogin,
   postLogin,
+  getEditor,
+  postEditor,
 } from "../controllers/globalController";
-import {
-  getJoin,
-  postJoin,
-} from "../controllers/userController";
+import { getJoin, postJoin } from "../controllers/userController";
 import { onlyPrivate, onlyPublic } from "../middleware";
-import {
-  logout,
-  userDetail,
-} from "../controllers/userController";
+import { logout, userDetail } from "../controllers/userController";
 
 const rootRouter = express.Router();
 
@@ -26,14 +22,13 @@ rootRouter
 
 rootRouter.route(routes.home).get(home);
 
+rootRouter.route("/test").get(getEditor).post(postEditor);
+
 //login
-rootRouter
-  .route(routes.login)
-  .all(onlyPublic)
-  .get(getLogin)
-  .post(postLogin);
+rootRouter.route(routes.login).all(onlyPublic).get(getLogin).post(postLogin);
 
 rootRouter.get(routes.logout, onlyPrivate, logout);
 
 rootRouter.route(routes.me).get(userDetail);
+
 export default rootRouter;

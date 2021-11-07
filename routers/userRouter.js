@@ -9,11 +9,7 @@ import {
   startGithubLogin,
   callbackGithubLogin,
 } from "../controllers/userController";
-import {
-  onlyPrivate,
-  onlyPublic,
-  uploadAvatar,
-} from "../middleware";
+import { onlyPrivate, onlyPublic, uploadAvatar } from "../middleware";
 
 const userRouter = express.Router();
 
@@ -31,15 +27,7 @@ userRouter
 
 userRouter.route(routes.userDetail()).get(userDetail);
 
-userRouter.get(
-  "/github/start",
-  onlyPublic,
-  startGithubLogin,
-);
-userRouter.get(
-  "/github/callback",
-  onlyPublic,
-  callbackGithubLogin,
-);
+userRouter.get("/github/start", onlyPublic, startGithubLogin);
+userRouter.get("/github/callback", onlyPublic, callbackGithubLogin);
 
 export default userRouter;

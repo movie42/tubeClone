@@ -2,6 +2,7 @@ import routes from "../routes";
 import User from "../model/userModel";
 import bcrypt from "bcrypt";
 import VideoModel from "../model/videoModel";
+import { render } from "sass";
 
 export const home = async (req, res) => {
   const video = await VideoModel.find({});
@@ -29,10 +30,7 @@ export const postLogin = async (req, res) => {
       errorMessage: "회원 정보가 존재하지 않습니다.",
     });
   }
-  const confirm = await bcrypt.compare(
-    password,
-    user.password,
-  );
+  const confirm = await bcrypt.compare(password, user.password);
   if (!confirm) {
     return res.status(400).render("login", {
       pageTitle: "로그인",
@@ -42,4 +40,21 @@ export const postLogin = async (req, res) => {
   req.session.loggedIn = true;
   req.session.user = user;
   return res.redirect(routes.home);
+};
+
+// test editor
+
+export const getEditor = (req, res) => {
+  try {
+    return res.render("testEditor", { pageTitle: "테스트 에디터" });
+  } catch (e) {
+    console.log(e);
+    res.render("404", { pageTitle: "404" });
+  }
+};
+
+export const postEditor = async (req, res) => {
+  const {
+    body: { editorBody },
+  } = req;
 };
