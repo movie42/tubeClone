@@ -6,6 +6,7 @@ import {
   postLogin,
   getEditor,
   postEditor,
+  getEditorData
 } from "../controllers/globalController";
 import { getJoin, postJoin } from "../controllers/userController";
 import { onlyPrivate, onlyPublic } from "../middleware";
@@ -20,12 +21,17 @@ rootRouter
   .get(getJoin)
   .post(postJoin, postLogin);
 
+rootRouter.route("/test/editor").get(getEditorData);
 rootRouter.route(routes.home).get(home);
 
 rootRouter.route("/test").get(getEditor).post(postEditor);
 
 //login
-rootRouter.route(routes.login).all(onlyPublic).get(getLogin).post(postLogin);
+rootRouter
+  .route(routes.login)
+  .all(onlyPublic)
+  .get(getLogin)
+  .post(postLogin);
 
 rootRouter.get(routes.logout, onlyPrivate, logout);
 

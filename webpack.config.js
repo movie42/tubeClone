@@ -6,7 +6,8 @@ module.exports = {
     main: "./assets/js/main.js",
     comments: "./assets/js/comments.js",
     videos: "./assets/js/videos.js",
-    editor: "./assets/js/editor.js"
+    editor: "./assets/js/editor.js",
+    viewer: "./assets/js/viewer.js"
   },
   mode: "development",
   watch: true,
