@@ -6,18 +6,19 @@ module.exports = {
     main: "./assets/js/main.js",
     comments: "./assets/js/comments.js",
     videos: "./assets/js/videos.js",
+    editor: "./assets/js/editor.js"
   },
   mode: "development",
   watch: true,
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "css/styles.css",
-    }),
+      filename: "css/styles.css"
+    })
   ],
   output: {
     filename: "js/[name].js",
     path: path.resolve(__dirname, "static"),
-    clean: true,
+    clean: true
   },
   module: {
     rules: [
@@ -31,23 +32,23 @@ module.exports = {
                 "@babel/preset-env",
                 {
                   targets: {
-                    browsers: ["last 2 chrome versions"],
+                    browsers: ["last 2 chrome versions"]
                   },
-                  debug: true,
-                },
-              ],
-            ],
-          },
-        },
+                  debug: true
+                }
+              ]
+            ]
+          }
+        }
       },
       {
         test: /\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
-          "sass-loader",
-        ],
-      },
-    ],
-  },
+          "sass-loader"
+        ]
+      }
+    ]
+  }
 };
