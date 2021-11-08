@@ -3,11 +3,11 @@ const path = require("path");
 
 module.exports = {
   entry: {
-    main: "./assets/js/main.js",
-    comments: "./assets/js/comments.js",
-    videos: "./assets/js/videos.js",
-    editor: "./assets/js/editor.js",
-    viewer: "./assets/js/viewer.js"
+    main: "./src/assets/js/main.js",
+    comments: "./src/assets/js/comments.js",
+    videos: "./src/assets/js/videos.js",
+    editor: "./src/assets/js/editor.js",
+    viewer: "./src/assets/js/viewer.js"
   },
   mode: "development",
   watch: true,

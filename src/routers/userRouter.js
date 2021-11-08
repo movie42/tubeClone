@@ -7,7 +7,7 @@ import {
   getChangePassword,
   postChangePassword,
   startGithubLogin,
-  callbackGithubLogin,
+  callbackGithubLogin
 } from "../controllers/userController";
 import { onlyPrivate, onlyPublic, uploadAvatar } from "../middleware";
 

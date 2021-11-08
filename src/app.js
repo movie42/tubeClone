@@ -24,10 +24,12 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URL,
-    }),
-  }),
+      mongoUrl: process.env.MONGO_URL
+    })
+  })
 );
+
+app.set("views", process.cwd() + "/src/views");
 app.set("view engine", "pug");
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("static"));
