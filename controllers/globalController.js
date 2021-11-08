@@ -88,3 +88,16 @@ export const getEditorData = async (req, res) => {
     console.log(e);
   }
 };
+
+export const getParagraph = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+  try {
+    const notice = await Notice.findById(id);
+
+    return res.status(303).json({ notice });
+  } catch (e) {
+    console.log(e);
+  }
+};

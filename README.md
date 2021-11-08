@@ -6,6 +6,8 @@
 
 - [실천적 프로그래밍을 위한 자바스크립트 프로젝트](#실천적-프로그래밍을-위한-자바스크립트-프로젝트)
   - [목차](#목차)
+  - [업데이트](#업데이트)
+    - [2021.11.8](#2021118)
   - [목표](#목표)
     - [1. 함수형 자바스크립트](#1-함수형-자바스크립트)
     - [2. Web Component, Virtual DOM](#2-web-component-virtual-dom)
@@ -36,6 +38,14 @@
     - [12-3. status()](#12-3-status)
     - [12-4. populate('ref')](#12-4-populateref)
     - [13. Back-end에서 Front-End로 데이터 보내기](#13-back-end에서-front-end로-데이터-보내기)
+
+## 업데이트
+
+### 2021.11.8
+
+Toast UI Editor ver 3.1.1 업데이트
+
+> [Toast Ui Editor 붙이면서 배운것들](./develop_diary/2021_11_8.md)
 
 ## 목표
 
