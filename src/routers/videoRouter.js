@@ -6,7 +6,7 @@ import {
   videoDetail,
   getEditVideo,
   postEditVideo,
-  deleteVideo,
+  deleteVideo
 } from "../controllers/videoController";
 import { uploadVideo, onlyPrivate } from "../middleware";
 
@@ -21,9 +21,7 @@ videoRouter
   .get(getEditVideo)
   .post(postEditVideo);
 
-videoRouter
-  .route(routes.deleteVideo())
-  .get(onlyPrivate, deleteVideo);
+videoRouter.route(routes.deleteVideo()).get(onlyPrivate, deleteVideo);
 
 // video upload
 videoRouter

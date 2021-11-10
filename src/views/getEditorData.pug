@@ -2,7 +2,5 @@ extends layouts/layout
 
 block content
     #viewer
-        each item in data
-            h1=item.headTitle
-            #{item.editorBody}
+        #{body}
     script(src="/static/js/viewer.js") 

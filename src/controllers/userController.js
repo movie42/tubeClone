@@ -9,24 +9,23 @@ export const getJoin = (req, res) => {
 };
 
 export const postJoin = async (req, res, next) => {
-  const { name, email, userName, password, password2 } =
-    req.body;
+  const { name, email, userName, password, password2 } = req.body;
   const exists = await User.exists({
-    $or: [{ userName }, { email }],
+    $or: [{ userName }, { email }]
   });
 
   if (exists) {
     return res.status(400).render("join", {
       pageTitle: "회원가입",
       errorMessage:
-        "이미 사용하고 있는 닉네임 혹은 가입된 이메일입니다.",
+        "이미 사용하고 있는 닉네임 혹은 가입된 이메일입니다."
     });
   }
 
   if (password !== password2) {
     return res.status(400).render("join", {
       pageTitle: "회원가입",
-      errorMessage: "비밀번호가 서로 다릅니다.",
+      errorMessage: "비밀번호가 서로 다릅니다."
     });
   } else {
     try {
@@ -34,14 +33,14 @@ export const postJoin = async (req, res, next) => {
         name,
         email,
         userName,
-        password,
+        password
       });
       return res.redirect("/");
     } catch (error) {
       console.log(error);
       res.status(400).render("join", {
         pageTitle: "회원가입",
-        errorMessage: "회원 가입을 완료할 수 없습니다.",
+        errorMessage: "회원 가입을 완료할 수 없습니다."
       });
     }
   }
@@ -54,21 +53,19 @@ export const logout = (req, res) => {
 
 export const userDetail = async (req, res) => {
   const {
-    params: { id },
+    params: { id }
   } = req;
   try {
-    const userData = await User.findById(id).populate(
-      "videos",
-    );
+    const userData = await User.findById(id).populate("videos");
     if (!userData) {
       return res.status(404).render("404", {
         pageTitle: "사용자를 찾을 수 없습니다.",
-        errorMessage: "사용자를 찾을 수 없습니다.",
+        errorMessage: "사용자를 찾을 수 없습니다."
       });
     }
     return res.render("userDetail", {
       pageTitle: "사용자 정보",
-      userData,
+      userData
     });
   } catch (error) {
     console.log(error);
@@ -78,7 +75,7 @@ export const userDetail = async (req, res) => {
 
 export const getEditProfile = (req, res) => {
   return res.render("editProfile", {
-    pageTitle: "프로필 수정",
+    pageTitle: "프로필 수정"
   });
 };
 
@@ -90,11 +87,11 @@ export const postEditProfile = async (req, res) => {
         name: sessionName,
         email: sessionEmail,
         userName: sessionUserName,
-        avatar: sessionAvatar,
-      },
+        avatar: sessionAvatar
+      }
     },
     body: { name, email, userName },
-    file,
+    file
   } = req;
   // session과 form의 정보가 다르면 바꾼다는 것이다.
 
@@ -107,14 +104,14 @@ export const postEditProfile = async (req, res) => {
     try {
       // email, name이 이미 있는 경우를 체크해야한다.
       const exists = await User.exists({
-        $or: [{ userName }, { email }],
+        $or: [{ userName }, { email }]
       });
 
       if (exists) {
         return res.status(400).render("editProfile", {
           pageTitle: "프로필 수정",
           errorMessage:
-            "이미 사용하고 있는 닉네임 혹은 가입된 이메일입니다.",
+            "이미 사용하고 있는 닉네임 혹은 가입된 이메일입니다."
         });
       }
       const updateUser = await User.findByIdAndUpdate(
@@ -123,9 +120,9 @@ export const postEditProfile = async (req, res) => {
           avatar: file ? file.path : sessionAvatar,
           email,
           userName,
-          name,
+          name
         },
-        { new: true },
+        { new: true }
       );
       req.session.user = updateUser;
       return res.redirect(`/user${routes.editProfile}`);
@@ -139,12 +136,11 @@ export const postEditProfile = async (req, res) => {
 };
 
 export const startGithubLogin = (req, res) => {
-  const baseUrl =
-    "https://github.com/login/oauth/authorize";
+  const baseUrl = "https://github.com/login/oauth/authorize";
   const config = {
     client_id: process.env.GH_CLIENT,
     allow_signup: false,
-    scope: "read:user user:email",
+    scope: "read:user user:email"
   };
   const params = new URLSearchParams(config).toString();
   const finalUrl = `${baseUrl}?${params}`;
@@ -152,12 +148,11 @@ export const startGithubLogin = (req, res) => {
 };
 
 export const callbackGithubLogin = async (req, res) => {
-  const baseUrl =
-    "https://github.com/login/oauth/access_token";
+  const baseUrl = "https://github.com/login/oauth/access_token";
   const config = {
     client_id: process.env.GH_CLIENT,
     client_secret: process.env.GH_SECRET,
-    code: req.query.code,
+    code: req.query.code
   };
   const params = new URLSearchParams(config).toString();
   const finalUrl = `${baseUrl}?${params}`;
@@ -165,8 +160,8 @@ export const callbackGithubLogin = async (req, res) => {
     await fetch(finalUrl, {
       method: "POST",
       headers: {
-        Accept: "application/json",
-      },
+        Accept: "application/json"
+      }
     })
   ).json();
   console.log(tokenRequest);
@@ -177,26 +172,25 @@ export const callbackGithubLogin = async (req, res) => {
     const userData = await (
       await fetch(`${apiUrl}/user`, {
         headers: {
-          Authorization: `token ${access_token}`,
-        },
+          Authorization: `token ${access_token}`
+        }
       })
     ).json();
     const emailData = await (
       await fetch(`${apiUrl}/user/emails`, {
         headers: {
-          Authorization: `token ${access_token}`,
-        },
+          Authorization: `token ${access_token}`
+        }
       })
     ).json();
     const emailObj = emailData.find(
-      (email) =>
-        email.primary === true && email.verified === true,
+      (email) => email.primary === true && email.verified === true
     );
     if (!emailObj) {
       return res.redirect(routes.login);
     }
     let user = await User.findOne({
-      email: emailObj.email,
+      email: emailObj.email
     });
     if (!user) {
       user = await User.create({
@@ -204,7 +198,7 @@ export const callbackGithubLogin = async (req, res) => {
         userName: userData.login,
         email: emailObj.email,
         password: "",
-        socialOnly: true,
+        socialOnly: true
       });
     }
     req.session.loggedIn = true;
@@ -220,32 +214,29 @@ export const getChangePassword = (req, res) => {
     return res.redirect("/");
   }
   res.render("changePassword", {
-    pageTitle: "비밀번호 변경",
+    pageTitle: "비밀번호 변경"
   });
 };
 
 export const postChangePassword = async (req, res) => {
   const {
     session: {
-      user: { _id },
+      user: { _id }
     },
-    body: { oldPassword, newPassword, newPassword2 },
+    body: { oldPassword, newPassword, newPassword2 }
   } = req;
   const user = await User.findById(_id);
-  const confirm = await bcrypt.compare(
-    oldPassword,
-    user.password,
-  );
+  const confirm = await bcrypt.compare(oldPassword, user.password);
   if (!confirm) {
     return res.status(400).render("changePassword", {
       pageTitle: "비민번호 변경",
-      errorMessage: "기존의 비밀번호가 일치하지 않습니다.",
+      errorMessage: "기존의 비밀번호가 일치하지 않습니다."
     });
   }
   if (newPassword !== newPassword2) {
     return res.status(400).render("changePassword", {
       pageTitle: "비민번호 변경",
-      errorMessage: "새로운 비밀번호가 일치하지 않습니다.",
+      errorMessage: "새로운 비밀번호가 일치하지 않습니다."
     });
   }
   user.password = newPassword;
