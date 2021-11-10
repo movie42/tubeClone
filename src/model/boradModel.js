@@ -1,22 +1,22 @@
 import mongoose from "mongoose";
 
 const editorSchema = new mongoose.Schema({
-  headTitle: {
+  title: {
     type: String,
-    required: true
+    required: true,
   },
-  editorBody: {
-    type: String
+  markdown: {
+    type: String,
   },
   createAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "User"
-  }
+    ref: "User",
+  },
 });
 
 const model = mongoose.model("Editor", editorSchema);

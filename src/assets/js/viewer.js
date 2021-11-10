@@ -1,25 +1,26 @@
 import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
-const data = document.getElementById("viewer");
 
-const viewer = new Viewer({
-  el: document.querySelector("#viewer")
-});
+const viewerContainer = document.getElementById("viewer");
 
-const getData = async () => {
-  const id = window.location.pathname.split("/")[2];
-
-  const data = await fetch(`/api/${id}/notice-data`, {
-    headers: { "Content-Type": "application/json" },
-    method: "GET"
+if (viewerContainer) {
+  const viewer = new Viewer({
+    el: document.querySelector("#viewer"),
   });
 
-  const response = await data.json();
+  const getData = async function () {
+    const id = window.location.pathname.split("/")[2];
+    const data = await fetch(`/api/board/${id}/data`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const getJson = await data.json();
 
-  const {
-    notice: { paragraph }
-  } = response;
+    const {
+      data: { markdown },
+    } = getJson;
 
-  viewer.setMarkdown(paragraph);
-};
+    viewer.setMarkdown(markdown);
+  };
 
-getData();
+  getData();
+}

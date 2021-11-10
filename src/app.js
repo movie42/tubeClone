@@ -10,6 +10,7 @@ import expressSession from "express-session";
 import flash from "express-flash";
 import MongoStore from "connect-mongo";
 import routes from "./routes";
+import boardRouter from "./routers/boardRouter";
 import { localMiddleware } from "./middleware";
 
 const app = express();
@@ -24,9 +25,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URL
-    })
-  })
+      mongoUrl: process.env.MONGO_URL,
+    }),
+  }),
 );
 
 app.set("views", process.cwd() + "/src/views");
@@ -47,5 +48,6 @@ app.use("/api", apiRouter);
 app.use(routes.home, rootRouter);
 app.use(routes.user, userRouter);
 app.use(routes.video, videoRouter);
+app.use("/board", boardRouter);
 
 export default app;
