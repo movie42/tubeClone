@@ -1,0 +1,9 @@
+extends ../layouts/layout
+
+block content 
+    form
+        input(type="text" name="제목" value=data.title)
+    #updateSection
+    button(type="button") 내용 제출
+    a(href=`/board/${data.id}/delete`) 삭제
+    script(src="/static/js/editor.js") 

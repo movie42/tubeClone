@@ -10,7 +10,7 @@ function editor(container) {
     el: container,
     previewStyle: "vertical",
     height: "500px",
-    initialEditType: "markdown",
+    initialEditType: "markdown"
   });
 
   return board;
@@ -18,18 +18,18 @@ function editor(container) {
 
 function windowPathHandler(res) {
   const {
-    data: { _id },
+    data: { _id }
   } = res;
 
   window.location.pathname = `/board/${_id}`;
 }
 
-const getData = async (event, url, title, markdown) => {
+const handleSendData = async (event, url, title, markdown) => {
   const postData = async function () {
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, markdown }),
+      body: JSON.stringify({ title, markdown })
     });
     return response;
   };
@@ -42,10 +42,36 @@ const getData = async (event, url, title, markdown) => {
 if (editorContainer) {
   const address = "/board/create";
   const getEditor = editor(editorContainer);
+
   btn.addEventListener("click", function (e) {
     const head = title.value;
     const markdown = getEditor.getMarkdown();
-    return getData(e, address, head, markdown);
+    return handleSendData(e, address, head, markdown);
   });
 } else if (updateContainer) {
+  const getEditor = editor(updateContainer);
+  const address = window.location.pathname;
+
+  const getData = async function () {
+    const id = window.location.pathname.split("/")[2];
+    const data = await fetch(`/api/board/${id}/data`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    });
+    const getJson = await data.json();
+
+    const {
+      data: { markdown }
+    } = getJson;
+
+    getEditor.setMarkdown(markdown);
+  };
+
+  getData();
+
+  btn.addEventListener("click", function (e) {
+    const head = title.value;
+    const markdown = getEditor.getMarkdown();
+    return handleSendData(e, address, head, markdown);
+  });
 }

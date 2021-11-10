@@ -2,5 +2,6 @@ extends ../layouts/layout
 
 block content 
     h1=data.title
+    a(href=`/board/${data._id}/edit`) 수정
     #viewer
     script(src="/static/js/viewer.js") 

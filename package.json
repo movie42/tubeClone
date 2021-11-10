@@ -6,7 +6,7 @@
   "scripts": {
     "dev:server": "nodemon",
     "dev:assets": "webpack",
-    "dbRun": "brew services run mongodb-community",
+    "db": "brew services run mongodb-community",
     "stopDb": "brew services stop mongodb-community"
   },
   "author": "",
