@@ -7,7 +7,7 @@ import {
   getNoticeList,
   getEditorUpdate,
   postEditorUpdate,
-  deleteNoticeData
+  deleteNoticeData,
 } from "../controllers/boardController";
 
 const board = express.Router();

@@ -10,7 +10,7 @@ function editor(container) {
     el: container,
     previewStyle: "vertical",
     height: "500px",
-    initialEditType: "markdown"
+    initialEditType: "markdown",
   });
 
   return board;
@@ -18,7 +18,7 @@ function editor(container) {
 
 function windowPathHandler(res) {
   const {
-    data: { _id }
+    data: { _id },
   } = res;
 
   window.location.pathname = `/board/${_id}`;
@@ -29,7 +29,7 @@ const handleSendData = async (event, url, title, markdown) => {
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, markdown })
+      body: JSON.stringify({ title, markdown }),
     });
     return response;
   };
@@ -56,12 +56,12 @@ if (editorContainer) {
     const id = window.location.pathname.split("/")[2];
     const data = await fetch(`/api/board/${id}/data`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
     });
     const getJson = await data.json();
 
     const {
-      data: { markdown }
+      data: { markdown },
     } = getJson;
 
     getEditor.setMarkdown(markdown);

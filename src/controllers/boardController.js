@@ -7,7 +7,7 @@ export const getNoticeList = async (req, res) => {
     const data = await Board.find({});
     return res.render("editor/getDataList", {
       pageTitle: "게시판",
-      data
+      data,
     });
   } catch (e) {
     console.log(e);
@@ -18,7 +18,7 @@ export const getNoticeList = async (req, res) => {
 export const getEditor = (req, res) => {
   try {
     return res.render("editor/editor", {
-      pageTitle: "테스트 에디터"
+      pageTitle: "테스트 에디터",
     });
   } catch (e) {
     console.log(e);
@@ -29,16 +29,16 @@ export const getEditor = (req, res) => {
 export const postEditor = async (req, res) => {
   const {
     session: {
-      user: { _id }
+      user: { _id },
     },
-    body: { title, markdown }
+    body: { title, markdown },
   } = req;
 
   try {
     const data = await Board.create({
       title,
       markdown,
-      creator: _id
+      creator: _id,
     });
 
     return res.status(303).json({ data });
@@ -52,7 +52,7 @@ export const postEditor = async (req, res) => {
 
 export const getBoardDetail = async (req, res) => {
   const {
-    params: { id }
+    params: { id },
   } = req;
 
   try {
@@ -60,7 +60,7 @@ export const getBoardDetail = async (req, res) => {
 
     return res.render("editor/getDetail", {
       pageTitle: data.title,
-      data
+      data,
     });
   } catch (e) {
     console.log(e);
@@ -71,14 +71,14 @@ export const getBoardDetail = async (req, res) => {
 
 export const getEditorUpdate = async (req, res) => {
   const {
-    params: { id }
+    params: { id },
   } = req;
   try {
     const data = await Board.findById(id);
 
     return res.render("editor/getUpdate", {
       pageTitle: `${data.title} 수정`,
-      data
+      data,
     });
   } catch (e) {
     console.log(e);
@@ -90,20 +90,20 @@ export const postEditorUpdate = async (req, res) => {
     params: { id },
     body: { title, markdown },
     session: {
-      user: { _id }
-    }
+      user: { _id },
+    },
   } = req;
 
   try {
     const data = await Board.findByIdAndUpdate(
       {
-        _id: id
+        _id: id,
       },
       {
         title,
         markdown,
-        creator: _id
-      }
+        creator: _id,
+      },
     );
 
     return res.status(201).json({ data });
@@ -116,7 +116,7 @@ export const postEditorUpdate = async (req, res) => {
 
 export const deleteNoticeData = async (req, res) => {
   const {
-    params: { id }
+    params: { id },
   } = req;
 
   try {
