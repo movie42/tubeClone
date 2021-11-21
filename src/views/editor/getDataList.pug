@@ -1,8 +1,8 @@
 extends ../layouts/layout
 
 block content
-    #viewer
+    a(href="/board/create") 쓰기
+    ul
         each item in data
-            h1=item.headTitle
-            #{item.editorBody}
-    script(src="/static/js/viewer.js") 
+            li
+                a(href=`/board/${item._id}`) #{item.title}

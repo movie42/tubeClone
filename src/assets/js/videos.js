@@ -1,7 +1,5 @@
 const video = document.querySelector("video");
-const videoController = document.getElementById(
-  "videoController",
-);
+const videoController = document.getElementById("videoController");
 
 const handleVideoEnd = (e) => {
   const { id } = videoController.dataset;

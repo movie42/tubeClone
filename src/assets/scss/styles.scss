@@ -1,11 +1,10 @@
 @import "./_reset.scss";
 @import "./_variable.scss";
 @import "@toast-ui/editor/dist/toastui-editor.css";
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;500;900&display=swap");
 
 body {
-  font-family: "NOTO Sans KR";
+  font-family: "Noto Sans KR", sans-serif;
   letter-spacing: -0.5px;
 }
 

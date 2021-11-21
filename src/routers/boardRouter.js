@@ -4,23 +4,30 @@ import {
   getEditor,
   postEditor,
   getBoardDetail,
+  getNoticeList,
+  getEditorUpdate,
+  postEditorUpdate,
+  deleteNoticeData,
 } from "../controllers/boardController";
 
 const board = express.Router();
 
 // list
-// board.route("/").get(getNoticeList);
+board.route("/").get(getNoticeList);
 
 // create;
 board.route("/create").get(getEditor).post(postEditor);
 
 // // update;
-// board.route("/create").get(getEditorUpdate).post(postEditorUpdate);
+board
+  .route("/:id([0-9a-f]{24})/edit")
+  .get(getEditorUpdate)
+  .post(postEditorUpdate);
 
 // detail(read)
 board.route("/:id([0-9a-f]{24})").get(getBoardDetail);
 
 // // delete;
-// notice.route("/delete").delete(deleteNoticeData);
+board.route("/:id([0-9a-f]{24})/delete").get(deleteNoticeData);
 
 export default board;

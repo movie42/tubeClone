@@ -1,9 +1,25 @@
 import Board from "../model/boradModel";
 
+// list
+
+export const getNoticeList = async (req, res) => {
+  try {
+    const data = await Board.find({});
+    return res.render("editor/getDataList", {
+      pageTitle: "게시판",
+      data,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 // create
 export const getEditor = (req, res) => {
   try {
-    return res.render("editor/testEditor", { pageTitle: "테스트 에디터" });
+    return res.render("editor/editor", {
+      pageTitle: "테스트 에디터",
+    });
   } catch (e) {
     console.log(e);
     res.render("404", { pageTitle: "404" });
@@ -42,27 +58,71 @@ export const getBoardDetail = async (req, res) => {
   try {
     const data = await Board.findById(id);
 
-    return res.render("editor/getDetail", { pageTitle: data.title, data });
+    return res.render("editor/getDetail", {
+      pageTitle: data.title,
+      data,
+    });
   } catch (e) {
     console.log(e);
   }
 };
 
-// export const getEditorData = async (req, res) => {
-//   try {
-//     const data = await Editor.find({});
-
-//     const body = data.map((value) => value.editorBody);
-//     console.log(body);
-//     return res.render("editor/getEditorData", {
-//       pageTitle: "데이터 얻기",
-//       body,
-//     });
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
-
 // // update
 
-// // delete
+export const getEditorUpdate = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    const data = await Board.findById(id);
+
+    return res.render("editor/getUpdate", {
+      pageTitle: `${data.title} 수정`,
+      data,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const postEditorUpdate = async (req, res) => {
+  const {
+    params: { id },
+    body: { title, markdown },
+    session: {
+      user: { _id },
+    },
+  } = req;
+
+  try {
+    const data = await Board.findByIdAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        title,
+        markdown,
+        creator: _id,
+      },
+    );
+
+    return res.status(201).json({ data });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// delete
+
+export const deleteNoticeData = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+
+  try {
+    await Board.findByIdAndDelete(id);
+    return res.redirect("/board");
+  } catch (e) {
+    console.log(e);
+  }
+};

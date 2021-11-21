@@ -4,15 +4,15 @@ import multer from "multer";
 const multerVideo = multer({
   dest: "uploads/video/",
   limits: {
-    fileSize: 10000000
-  }
+    fileSize: 10000000,
+  },
 });
 
 const multerAvatar = multer({
   dest: "uploads/avatar/",
   limits: {
-    fileSize: 3000000
-  }
+    fileSize: 3000000,
+  },
 });
 
 export const uploadVideo = multerVideo.single("video");
