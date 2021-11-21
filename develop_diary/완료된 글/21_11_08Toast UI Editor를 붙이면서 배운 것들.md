@@ -1,5 +1,7 @@
 # TOAST UI EDITOR를 붙이면서 배운것들
 
+> 21.11.08
+
 - [TOAST UI EDITOR를 붙이면서 배운것들](#toast-ui-editor를-붙이면서-배운것들)
   - [에디터를 붙이면서 도움이 됐던 글들](#에디터를-붙이면서-도움이-됐던-글들)
     - [토스트 에디터 관련](#토스트-에디터-관련)
@@ -60,7 +62,7 @@ const editor = new Editor({
   el: document.querySelector("#editorSection"),
   previewStyle: "vertical",
   height: "500px",
-  initialEditType: "markdown",
+  initialEditType: "markdown"
 });
 ```
 
@@ -96,7 +98,7 @@ const editor = new Editor({
   el: document.querySelector("#editorSection"),
   previewStyle: "vertical",
   height: "500px",
-  initialEditType: "markdown",
+  initialEditType: "markdown"
 });
 
 // 이벤트 리스터에 보낼 함수
@@ -110,7 +112,7 @@ async function handleEditor(e) {
   const data = await fetch("/test", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ headTitle, editorBody }),
+    body: JSON.stringify({ headTitle, editorBody })
   });
 }
 
@@ -125,7 +127,7 @@ btn.addEventListener("click", handleEditor);
 import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 
 const viewer = new Viewer({
-  el: document.querySelector("#viewer"),
+  el: document.querySelector("#viewer")
 });
 ```
 
@@ -187,13 +189,13 @@ const getData = async () => {
 
   const data = await fetch(`/api/${id}/notice-data`, {
     headers: { "Content-Type": "application/json" },
-    method: "GET",
+    method: "GET"
   });
 
   const response = await data.json();
 
   const {
-    notice: { paragraph },
+    notice: { paragraph }
   } = response;
 
   // Toast UI Viewer에서 제공하는 인스턴스
@@ -208,7 +210,7 @@ getData();
 ```javascript
 export const getParagraph = async (req, res) => {
   const {
-    params: { id },
+    params: { id }
   } = req;
   try {
     const notice = await Notice.findById(id);

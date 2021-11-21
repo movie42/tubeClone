@@ -1,5 +1,7 @@
 # TOAST UI EDITOR의 addImageBlobHook은 어떻게 동작하는 걸까?
 
+> 21.11.15
+
 ## 신기한 addImageBlobHook
 
 addImageBlobHook없이 이미지를 불러오면 data:\*의 엄청나게 긴 문자열을 볼 수 있다. 이걸 보자마자마 패닉에 빠졌다.(잘 모르는 것이 나오면 항상 공포를 느끼게 된다.) 하지만 토스트 UI 에디터에서 제공하는 addImageBlobHook은 이미지를 매우 간편하게 올릴 수 있도록 도와줬다. 신기한 포인트는 두 가지였다.
