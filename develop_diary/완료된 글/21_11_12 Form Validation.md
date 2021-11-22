@@ -140,4 +140,4 @@ fetch로 get을 할 때, body로 json 값이 넘어가지 않았는데 이유를
 > [[10분 테코톡] 🍎 그루밍의 Form Validation](https://www.youtube.com/watch?v=Z2YJvBw3pPI)  
 > [[병맛코딩만화] 웹 공격과 방어와 미친토끼 (보안, 파라미터 변조, XSS, SQL 인젝션, 비밀번호 암호화)](https://www.youtube.com/watch?v=dHcjwTvrxTk)
 
-전체 코드는 깃에서
+[전체 코드는 깃에서](https://github.com/movie42/tubeClone/blob/main/src/assets/js/validation.js)
