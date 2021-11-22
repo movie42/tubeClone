@@ -115,7 +115,25 @@ h3 {
       margin-top: 10px;
       font-size: 1.5em;
       padding: 10px;
+      &.errorMessage {
+        border-bottom: 2px solid $warn_color;
+      }
+      &.successMessage {
+        border-bottom: 2px solid $sucess_color;
+      }
     }
+
+    p {
+      &.errorMessage {
+        margin-bottom: 5px;
+        color: $warn_color;
+      }
+      &.successMessage {
+        margin-bottom: 5px;
+        color: $sucess_color;
+      }
+    }
+
     .submit_btn {
       margin-top: 10px;
       color: $basic_color;

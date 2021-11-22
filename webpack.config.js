@@ -7,6 +7,7 @@ module.exports = {
     comments: "./src/assets/js/comments.js",
     videos: "./src/assets/js/videos.js",
     editor: "./src/assets/js/editor.js",
+    validation: "./src/assets/js/validation.js",
     viewer: "./src/assets/js/viewer.js",
   },
   mode: "development",
