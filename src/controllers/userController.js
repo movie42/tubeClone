@@ -2,46 +2,49 @@ import routes from "../routes";
 import bcrypt from "bcrypt";
 import User from "../model/userModel";
 import fetch from "node-fetch";
-import Video from "../model/videoModel";
 
+// join
 export const getJoin = (req, res) => {
-  res.render("join", { pageTitle: "회원가입" });
+  return res.render("global/join", { pageTitle: "회원가입" });
 };
 
-export const postJoin = async (req, res, next) => {
-  const { name, email, userName, password, password2 } = req.body;
-  const exists = await User.exists({
-    $or: [{ userName }, { email }],
-  });
+export const postJoin = async (req, res) => {
+  const {
+    body: {
+      body: { email, name, userName, password, password2 },
+    },
+  } = req;
 
-  if (exists) {
-    return res.status(400).render("join", {
-      pageTitle: "회원가입",
-      errorMessage: "이미 사용하고 있는 닉네임 혹은 가입된 이메일입니다.",
+  try {
+    const exists = await User.exists({
+      $or: [{ userName }, { email }],
     });
-  }
 
-  if (password !== password2) {
-    return res.status(400).render("join", {
-      pageTitle: "회원가입",
-      errorMessage: "비밀번호가 서로 다릅니다.",
-    });
-  } else {
-    try {
-      await User.create({
-        name,
-        email,
-        userName,
-        password,
-      });
-      return res.redirect("/");
-    } catch (error) {
-      console.log(error);
-      res.status(400).render("join", {
-        pageTitle: "회원가입",
-        errorMessage: "회원 가입을 완료할 수 없습니다.",
+    if (exists) {
+      return res.status(400).json({
+        type: "isExistsError",
       });
     }
+
+    if (password !== password2) {
+      return res.status(400).json({
+        type: "isNotpasswordError",
+      });
+    }
+
+    await User.create({
+      email,
+      userName,
+      name,
+      password,
+    });
+
+    return res.status(201).json({
+      type: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ type: "isError" });
   }
 };
 
