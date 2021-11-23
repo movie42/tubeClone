@@ -25,9 +25,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URL,
-    }),
-  }),
+      mongoUrl: process.env.MONGO_URL
+    })
+  })
 );
 
 app.set("views", process.cwd() + "/src/views");
