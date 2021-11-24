@@ -1,3 +1,5 @@
+import DOMPurify from "dompurify";
+
 const dataAttribute = document.getElementById("videoController");
 const commentForm = document.querySelector(".videoComments form");
 
@@ -9,7 +11,7 @@ const addComment = (text, id) => {
   const videoComments = document.querySelector(".video_comments");
   const newComment = document.createElement("li");
   const span = document.createElement("span");
-  span.innerText = ` ${text}`;
+  span.innerHTML = ` ${text}`;
   newComment.className = "video_comment";
   newComment.dataset.id = id;
   newComment.appendChild(span);
@@ -23,10 +25,13 @@ const handleAddComment = async (event) => {
   if (text === "") {
     return "";
   }
+
+  // dompurify test
+
   const response = await fetch(`/api/video/${id}/comments`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text }),
+    body: JSON.stringify({ text })
   });
   if (response.status === 201) {
     commentTextArea.value = "";
@@ -35,6 +40,13 @@ const handleAddComment = async (event) => {
   }
 };
 
+function handleDirty(e) {
+  const dirty = e.target.value;
+  const clean = DOMPurify.sanitize(dirty);
+  commentTextArea.value = clean;
+}
+
 if (commentForm) {
+  commentTextArea.addEventListener("input", handleDirty);
   commentForm.addEventListener("submit", handleAddComment);
 }

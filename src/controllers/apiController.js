@@ -5,7 +5,7 @@ import User from "../model/userModel";
 
 export const getDB = async (req, res) => {
   const {
-    params: { name, value },
+    params: { name, value }
   } = req;
   let exist;
   try {
@@ -39,7 +39,7 @@ export const registerComment = async (req, res) => {
   const {
     params: { id },
     session: { user },
-    body: { text },
+    body: { text }
   } = req;
 
   const video = await Video.findById(id);
@@ -49,7 +49,7 @@ export const registerComment = async (req, res) => {
   const comment = await Comment.create({
     text,
     creator: user._id,
-    video: id,
+    video: id
   });
   video.comment.push(comment._id);
   const userComment = await User.findById(user._id);
@@ -62,7 +62,7 @@ export const registerComment = async (req, res) => {
 // get board data
 export const getBoradData = async (req, res) => {
   const {
-    params: { id },
+    params: { id }
   } = req;
 
   try {
