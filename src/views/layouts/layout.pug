@@ -7,9 +7,6 @@ html(lang="en")
         title #{pageTitle} | #{webTitle}
         link(rel="stylesheet", href="/static/css/styles.css")
     body
-        if messages.error
-            div#flashMessages
-                p=messages.error
         include ../partials/header
         main.main
             block content

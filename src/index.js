@@ -1,5 +1,6 @@
 import "./db";
 import app from "./app";
+import "./model/boradModel";
 import "./model/userModel";
 import "./model/videoModel";
 import "./model/commentModel";
