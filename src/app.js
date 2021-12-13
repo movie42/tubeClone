@@ -12,10 +12,12 @@ import MongoStore from "connect-mongo";
 import routes from "./routes";
 import boardRouter from "./routers/boardRouter";
 import { localMiddleware } from "./middleware";
+import cors from "cors";
 
 const app = express();
 
 app.use(helmet({ contentSecurityPolicy: false }));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -29,6 +31,8 @@ app.use(
     })
   })
 );
+
+app.use(cors());
 
 app.set("views", process.cwd() + "/src/views");
 app.set("view engine", "pug");
