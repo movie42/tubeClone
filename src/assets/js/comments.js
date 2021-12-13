@@ -1,3 +1,5 @@
+import DOMPurify from "dompurify";
+
 const dataAttribute = document.getElementById("videoController");
 const commentForm = document.querySelector(".videoComments form");
 
@@ -9,7 +11,7 @@ const addComment = (text, id) => {
   const videoComments = document.querySelector(".video_comments");
   const newComment = document.createElement("li");
   const span = document.createElement("span");
-  span.innerText = ` ${text}`;
+  span.textContent = ` ${text}`;
   newComment.className = "video_comment";
   newComment.dataset.id = id;
   newComment.appendChild(span);
@@ -19,21 +21,60 @@ const addComment = (text, id) => {
 const handleAddComment = async (event) => {
   event.preventDefault();
   const { id } = dataAttribute.dataset;
-  const text = commentTextArea.value;
-  if (text === "") {
+  const textValue = commentTextArea.value;
+  if (textValue === "") {
     return "";
   }
+
+  const text = DOMPurify.sanitize(textValue, {
+    ADD_ATTR: ["rel", "target", "hreflang", "type"],
+    FORBID_TAGS: [
+      "input",
+      "script",
+      "textarea",
+      "form",
+      "button",
+      "select",
+      "meta",
+      "style",
+      "link",
+      "title",
+      "object",
+      "base"
+    ]
+  });
+
   const response = await fetch(`/api/video/${id}/comments`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text }),
+    body: JSON.stringify({ text })
   });
+
   if (response.status === 201) {
     commentTextArea.value = "";
     const { newComment } = await response.json();
     addComment(text, newComment);
   }
 };
+
+// dompurify test
+
+// function handleDirty(e) {
+//   const dirty = e.target.value;
+
+//   function changeTextValue(text) {
+//     console.log(text);
+//     const changeText = text.replace(/&lt;/gi, "<");
+//     console.log(changeText);
+//     return changeText;
+//   }
+
+//
+
+//   const value = changeTextValue(clean);
+
+//   e.target.value = value;
+// }
 
 if (commentForm) {
   commentForm.addEventListener("submit", handleAddComment);

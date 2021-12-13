@@ -6,22 +6,23 @@ import routes from "../routes";
 //video upload
 
 export const getVideoUploadPage = (req, res) =>
-  res.render("uploadVideo", { pageTitle: "비디오 업로드" });
+  res.render("video/uploadVideo", { pageTitle: "비디오 업로드" });
 
 export const newVideoUpload = async (req, res) => {
   const {
     session: {
-      user: { _id },
+      user: { _id }
     },
     body: { title, description },
-    file: { path },
+    file: { path }
   } = req;
+
   try {
     const newVideo = await Video.create({
       title,
       fileUrl: path,
       description,
-      creator: _id,
+      creator: _id
     });
     const user = await User.findById(_id);
     user.videos.push(newVideo._id);
@@ -30,27 +31,27 @@ export const newVideoUpload = async (req, res) => {
   } catch (err) {
     console.log("Error!!", err);
     return res.status(400).render("404", {
-      pageTitle: "알수없는 에러가 발생했습니다.",
+      pageTitle: "알수없는 에러가 발생했습니다."
     });
   }
 };
 
 export const videoDetail = async (req, res) => {
   const {
-    params: { id },
+    params: { id }
   } = req;
   try {
     const video = await Video.findById(id)
       .populate("creator")
       .populate("comment");
-    return res.render("videoDetail", {
+    return res.render("video/videoDetail", {
       pageTitle: video.title,
-      video,
+      video
     });
   } catch (error) {
     console.log(error);
     return res.status(404).render("404", {
-      pageTitle: "404 페이지를 찾을 수 가 없습니다.",
+      pageTitle: "404 페이지를 찾을 수 가 없습니다."
     });
   }
 };
@@ -59,47 +60,55 @@ export const videoDetail = async (req, res) => {
 export const getEditVideo = async (req, res) => {
   const {
     params: { id },
-    session: { _id },
+    session: {
+      user: { _id }
+    }
   } = req;
+
   try {
     const video = await Video.findById(id);
     if (String(video.creator) !== String(_id)) {
       return res.status(403).redirect("/");
     } else {
-      return res.render("editVideo", {
+      return res.render("video/editVideo", {
         pageTitle: video.title,
-        video,
+        video
       });
     }
   } catch (error) {
-    return res.redirect(routes.home);
+    console.log(error);
   }
 };
+
 export const postEditVideo = async (req, res) => {
   const {
-    session: { _id },
+    session: {
+      user: { _id }
+    },
     body: { title, description },
-    params: { id },
+    params: { id }
   } = req;
-  if (String(video.creator) !== String(_id)) {
-    return res.status(403).redirect("/");
-  }
+
   try {
-    const video = Video.findByIdAndUpdate(
+    const video = await Video.findByIdAndUpdate(
       {
-        _id: id,
+        _id: id
       },
       {
         title,
-        description,
-      },
+        description
+      }
     );
-    await res.save();
-    return res.redirect(`/video${routes.videoDetail(video.id)}`);
+
+    if (String(video.creator) !== String(_id)) {
+      return res.status(403).redirect("/");
+    }
+
+    return res.redirect(`${routes.videoDetail(video.id)}`);
   } catch (error) {
     console.log(error);
-    return res.status(404).render("404", {
-      pageTitle: "페이지를 찾을 수 없습니다.",
+    return res.status(404).render("global/404", {
+      pageTitle: "페이지를 찾을 수 없습니다."
     });
   }
 };
@@ -107,7 +116,7 @@ export const postEditVideo = async (req, res) => {
 export const deleteVideo = async (req, res) => {
   const {
     session: { _id },
-    params: { id },
+    params: { id }
   } = req;
   try {
     const video = await Video.findById(id);
@@ -139,7 +148,7 @@ export const registerComment = async (req, res) => {
   const {
     params: { id },
     session: { user },
-    body: { text },
+    body: { text }
   } = req;
 
   const video = await Video.findById(id);
@@ -149,7 +158,7 @@ export const registerComment = async (req, res) => {
   const comment = await Comment.create({
     text,
     creator: user._id,
-    video: id,
+    video: id
   });
   video.comment.push(comment._id);
   const userComment = await User.findById(user._id);

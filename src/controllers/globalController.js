@@ -21,19 +21,19 @@ export const postLogin = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({
     email,
-    socialOnly: false,
+    socialOnly: false
   });
   if (!user) {
     return res.status(400).render("global/login", {
       pageTitle: "로그인",
-      errorMessage: "회원 정보가 존재하지 않습니다.",
+      errorMessage: "회원 정보가 존재하지 않습니다."
     });
   }
   const confirm = await bcrypt.compare(password, user.password);
   if (!confirm) {
     return res.status(400).render("global/login", {
       pageTitle: "로그인",
-      errorMessage: "잘못된 비밀번호를 입력하였습니다.",
+      errorMessage: "잘못된 비밀번호를 입력하였습니다."
     });
   }
   req.session.loggedIn = true;

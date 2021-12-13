@@ -76,7 +76,7 @@ function isTrue(name, value) {
       name: /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,6}$/,
       userName: /^[a-zA-Z0-9]{5,10}$/,
       password:
-        /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,}$/,
+        /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,}$/
     };
     return obj[name].exec(value) ? true : false;
   }
@@ -103,7 +103,7 @@ async function checkedDataBase(bool, node) {
 
   if (name === "email" || name === "userName") {
     const response = await fetch(`/url/${name}=${value}`, {
-      method: "GET",
+      method: "GET"
     });
 
     const { exist } = await response.json();
@@ -133,7 +133,11 @@ fetch로 get을 할 때, body로 json 값이 넘어가지 않았는데 이유를
 
 그럼 이렇게 한것으로 완성인가? 아직 불안하다. 왜냐하면 XSS 취약점 이슈가 남아있다. 누군가가 form에 script를 입력할 경우에 악성 코드가 심겨질 여지가 있기 때문이다. Toast UI Editor를 붙이면서 NHN 팀에서는 DomPurify라는 npm 패키지를 사용하여 이 문제를 해소한 것으로 보인다. SQL 인젝션을 시도할 경우 방어가 되는지 확실하지 않다. DB가 완전히 망가질수 있다. 최소한의 보안을 위해서 helmet을 씌웠지만 helmet이 만능은 아닐 것이다.
 
-공부를 하면서 XSS 공격이나 SQL 인젝션을 시도하는 방법을 찾아봤는데 아직은 봐도 잘 모르겠다. 나 스스로 내 사이트를 테스트해보려고 한건데 아마 이 방법 외에 다른 방법이 있을지도 모른다.(더 찾아봐야지...)
+~~공부를 하면서 XSS 공격이나 SQL 인젝션을 시도하는 방법을 찾아봤는데 아직은 봐도 잘 모르겠다. 나 스스로 내 사이트를 테스트해보려고 한건데 아마 이 방법 외에 다른 방법이 있을지도 모른다.(더 찾아봐야지...)~~
+
+유튜브에서 XSS를 검색하자마자 공격 방법에 대해서 똭 나왔다.
+
+[7~8강 XSS 공격의 개요와 실습 - 동빈나 웹 해킹 강좌](https://youtube.com/playlist?list=PLRx0vPvlEmdDQxb41uc1G4ecjV-hklFDM)
 
 마지막으로 공부를 하면서 찾아봤던 유튜브 자료를 공유한다. Form Validation을 공부하는 사람들에게 도움이 됐으면 좋겠다.
 
